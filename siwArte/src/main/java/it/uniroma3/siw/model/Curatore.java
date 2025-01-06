@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
 public class Curatore {
 	
@@ -17,6 +18,10 @@ public class Curatore {
 	    private String codiceFiscale;
 	    private LocalDate dataNascita;
 	    private String luogoNascita;
+	    
+	    @OneToOne
+	    private Credenziali credenziali;
+	    
 		public Long getId() {
 			return id;
 		}
@@ -53,6 +58,12 @@ public class Curatore {
 		public void setLuogoNascita(String luogoNascita) {
 			this.luogoNascita = luogoNascita;
 		}
-	    
+		public Credenziali getCredenziali() {
+			return credenziali;
+		}
+		public void setCredenziali(Credenziali credenziali) {
+			this.credenziali = credenziali;
+		}
+		
 	    
 }
