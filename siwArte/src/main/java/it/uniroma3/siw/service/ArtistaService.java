@@ -38,7 +38,7 @@ public class ArtistaService {
     	return artistaRepository.findById(id).orElse(null);
     }
     
-    public void save(Artista artista) {
+    public void saveArtista(Artista artista) {
     	artistaRepository.save(artista);
     }
 }

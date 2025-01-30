@@ -81,7 +81,7 @@ public class ArtistaController {
 		    Artista existingArtista = artistaService.findById(id);
 		    if (existingArtista != null) {
 		        existingArtista.setNome(nome);
-		        artistaService.save(existingArtista);
+		        artistaService.saveArtista(existingArtista);
 		    }
 		    return "redirect:/admin/managementAristi";
 		}

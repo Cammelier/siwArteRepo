@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
@@ -16,9 +17,21 @@ public class Opera {
     private int annoRealizzazione;
     private String tecnica;
     private String collocazione;
+    private String Immagine;
 
+    
     @ManyToOne
+    @JoinColumn(name = "artista_id")
     private Artista artista;
+    
+    public String getImmagine() {
+		return Immagine;
+	}
+
+	public void setImmagine(String immagine) {
+		Immagine = immagine;
+	}
+
 
 	public Long getId() {
 		return id;
