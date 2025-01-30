@@ -33,4 +33,12 @@ public class ArtistaService {
     public void deleteArtista(Long id) {
         artistaRepository.deleteById(id);
     }
+    
+    public Artista findById(Long id) {
+    	return artistaRepository.findById(id).orElse(null);
+    }
+    
+    public void save(Artista artista) {
+    	artistaRepository.save(artista);
+    }
 }

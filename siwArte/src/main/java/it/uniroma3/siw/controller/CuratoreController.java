@@ -16,7 +16,7 @@ public class CuratoreController {
 	 @Autowired
 	    private PinacotecaService service;
 
-	    @GetMapping
+	    @GetMapping("/curatori")
 	    public List<Curatore> getCuratori() {
 	        return service.getAllCuratori();
 	    }
