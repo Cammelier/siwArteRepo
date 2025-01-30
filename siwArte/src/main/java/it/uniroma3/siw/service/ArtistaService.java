@@ -41,4 +41,8 @@ public class ArtistaService {
     public void saveArtista(Artista artista) {
     	artistaRepository.save(artista);
     }
+    
+    public void deleteArtista(Artista artista) {
+    	 artistaRepository.delete(artista);
+    }
 }

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siw.model.Artista;
+import it.uniroma3.siw.model.Credenziali;
 import it.uniroma3.siw.service.ArtistaService;
 import it.uniroma3.siw.service.PinacotecaService;
 
@@ -29,16 +30,18 @@ import it.uniroma3.siw.service.PinacotecaService;
 @RequestMapping("/api/artisti")
 public class ArtistaController {
 	 	
-		@Autowired
-	    private PinacotecaService service;
+		
 		
 		@Autowired
 		private ArtistaService artistaService; 
 
-	    @GetMapping("/artisti")
-	    public List<Artista> getArtisti() {
-	        return service.getAllArtisti();
-	    }
+		//view all
+		@GetMapping("/artisti")
+		public String showArtisti(Model model) {
+			model.addAttribute("artisti", artistaService.getAllArtisti());
+			return "artisti"; //restituisce il nome della vista
+		}
+		
 	    
 	    @GetMapping("/dettagliArt/{id}")
 	    public String getArtista(@PathVariable("id") Long id, Model model) {
@@ -47,17 +50,6 @@ public class ArtistaController {
 		    return "dettagliArt"; // restituisce il nome della vista Thymeleaf
 		}
 
-
-	    @PostMapping
-	    public Artista createArtista( @RequestBody Artista artista) {
-	        return service.saveArtista(artista);
-	    }
-
-	    @DeleteMapping("/{id}")
-	    public ResponseEntity<Void> deleteArtista(@PathVariable Long id) {
-	        service.deleteArtista(id);
-	        return ResponseEntity.noContent().build();
-	    }
 	    
 	  //edit artista
 		@GetMapping("/editArtista")
@@ -71,7 +63,7 @@ public class ArtistaController {
 		}
 
 		@PostMapping("/admin/updateArtista")
-		public String updateNegozio(@RequestParam("id") Long id,
+		public String updateArtista(@RequestParam("id") Long id,
 		                                   @RequestParam("nome") String nome,
 		                                   @RequestParam("cognome") String cognome,
 		                                   @RequestParam("dataDiNascita") LocalDate dataDiNascita,
@@ -84,5 +76,40 @@ public class ArtistaController {
 		        artistaService.saveArtista(existingArtista);
 		    }
 		    return "redirect:/admin/managementAristi";
+		}
+		
+		//add artista from admin
+		@GetMapping("/admin/formNewArtista")
+		public String showFormNewArtista(Model model) {
+			model.addAttribute("artista", new Artista());
+			return "admin/formNewArtista";
+		}
+		
+		@PostMapping("/admin/saveArtista")
+		public String saveArtista(@RequestParam("nome") String nome,
+				@RequestParam("cognome") String cognome,
+				@RequestParam("dataDiNascita") LocalDate dataDiNascita,
+				@RequestParam("luogodiNascita") String luogoDinascita,
+				@RequestParam("dataDiMorte") LocalDate dataDiMorte) {
+			Artista artista = new Artista();
+			artista.setNome(nome);
+			artista.setCognome(cognome);
+			artista.setLuogoNascita(luogoDinascita);
+			artista.setDataNascita(dataDiNascita);
+			artista.setDataMorte(dataDiMorte);
+			
+			artistaService.saveArtista(artista);
+			
+			return "redirect:/admin/managementArtisti"; 
+		}
+		//delete artista from admin
+		@GetMapping("/admin/artista/delete/{id}")
+		public String deleteArtista(@PathVariable("id") Long id) {
+		    Artista artista = artistaService.findById(id);
+		    if (artista != null) {
+		        // Elimina l' artista
+		        artistaService.deleteArtista(artista);
+		    }
+		    return "redirect:/admin/managementArtisti"; // Reindirizza alla lista dei negozi
 		}
 }
