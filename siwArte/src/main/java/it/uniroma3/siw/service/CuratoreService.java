@@ -34,7 +34,7 @@ public class CuratoreService {
     }
 
     
-    public void delete(Curatore curatore) {
+    public void deleteCuratore(Curatore curatore) {
         curatoreRepository.delete(curatore);
     }
 

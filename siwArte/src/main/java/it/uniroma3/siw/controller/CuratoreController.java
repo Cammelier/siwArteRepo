@@ -1,5 +1,6 @@
 package it.uniroma3.siw.controller;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import it.uniroma3.siw.model.Credenziali;
 import it.uniroma3.siw.model.Curatore;
 import it.uniroma3.siw.model.Negozio;
 import it.uniroma3.siw.service.CuratoreService;
@@ -54,8 +56,8 @@ public class CuratoreController {
 		    return "/editCuratore";
 		}
 		
-		@PostMapping("/admin/updateNegozio")
-		public String updateNegozio(@RequestParam("id") Long id,
+		@PostMapping("/admin/updateCuratore")
+		public String updateCuratore(@RequestParam("id") Long id,
 		                                   @RequestParam("nome") String nome,
 		                                   @RequestParam("cognome") String cognome,
 		                                   @RequestParam("codiceFiscale") String codiceFiscale,
@@ -96,4 +98,16 @@ public class CuratoreController {
 			
 			return "redirect:/admin/managementcuratori";
 		}
+		
+		//delete curatore from admin
+		@GetMapping("/admin/curatore/delete/{id}")
+		public String deleteCuratore(@PathVariable("id") Long id) {
+		    Curatore curatore = curatoreService.findById(id);
+		    if (curatore != null) {
+		        // Elimina il curatore
+		        curatoreService.deleteCuratore(curatore);
+		    }
+		    return "redirect:/admin/managementCuratore"; // Reindirizza alla lista dei negozi
+		}
+
 }
