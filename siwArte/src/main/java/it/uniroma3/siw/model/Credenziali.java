@@ -13,6 +13,7 @@ public class Credenziali {
 
 	
 	public static final String ADMIN_ROLE = "ADMIN";
+	public static final String CURATORE_ROLE = "CURATORE";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

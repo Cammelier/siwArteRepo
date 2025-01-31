@@ -5,6 +5,11 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siw.model.Credenziali;
 import it.uniroma3.siw.model.Curatore;
-import it.uniroma3.siw.model.Negozio;
+import it.uniroma3.siw.service.CredenzialiService;
 import it.uniroma3.siw.service.CuratoreService;
 import it.uniroma3.siw.service.PinacotecaService;
 
@@ -26,6 +31,12 @@ public class CuratoreController {
 	    private PinacotecaService service;
 	 @Autowired
 	 	private CuratoreService curatoreService;
+	 @Autowired
+		private CredenzialiService credenzialiService;
+
+	@Autowired
+		private PasswordEncoder passwordEncoder;
+
 
 	    @GetMapping("/curatori")
 	    public String ShowCuratori(Model model) {
@@ -43,6 +54,22 @@ public class CuratoreController {
 		    Curatore curatore = this.curatoreService.findById(id);
 		    model.addAttribute("curatore", curatore);
 		    return "dettagliCur"; // restituisce il nome della vista Thymeleaf
+		}
+	    
+	  //managment admin
+		@GetMapping(value = "/admin/managementCuratori")
+		public String managementNegozi(Model model) {
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			if (!(authentication instanceof AnonymousAuthenticationToken)) {
+				UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+				Credenziali credenziali = credenzialiService.getCredenziali(userDetails.getUsername());
+
+				if (credenziali.getRuolo().equals(Credenziali.ADMIN_ROLE)) {
+					model.addAttribute("curatore", curatoreService.findAll());
+					return "admin/managementCuratori.html";
+				}
+			}
+			return "redirect:/";
 		}
 	    
 	  //edit curatore
@@ -86,13 +113,24 @@ public class CuratoreController {
 				@RequestParam("cognome") String cognome,
 				@RequestParam("dataDiNascita") LocalDate dataDiNascita,
 				@RequestParam("codiceFiscale") String codiceFiscale,
-				@RequestParam("luogoDinascita") String luogoDiNascita) {
+				@RequestParam("luogoDinascita") String luogoDiNascita,
+				@RequestParam("username") String username,
+				@RequestParam("password") String password) {
 			Curatore curatore = new Curatore();
 			curatore.setNome(nome);
 			curatore.setCognome(cognome);
 			curatore.setCodiceFiscale(codiceFiscale);
 			curatore.setLuogoNascita(luogoDiNascita);
 			curatore.setDataNascita(dataDiNascita);
+			
+			Credenziali credenziali = new Credenziali();
+			credenziali.setUsername(username);
+			credenziali.setPassword(passwordEncoder.encode(password));
+			credenziali.setRuolo(Credenziali.CURATORE_ROLE);
+			credenziali.setCuratore(curatore);
+			curatore.setCredenziali(credenziali);
+			
+			credenzialiService.save(credenziali);
 			
 			curatoreService.saveCuratore(curatore);
 			
@@ -104,10 +142,20 @@ public class CuratoreController {
 		public String deleteCuratore(@PathVariable("id") Long id) {
 		    Curatore curatore = curatoreService.findById(id);
 		    if (curatore != null) {
+		    	Credenziali credenziali = curatore.getCredenziali();
+		    	if(credenziali != null) {
+		    		curatore.setCredenziali(null);
+		    		curatoreService.saveCuratore(curatore);
+		    		
+		    		credenziali.setCuratore(null);
+		    		credenzialiService.save(credenziali);
+		    		
+		    		credenzialiService.delete(credenziali);
+		    	}
 		        // Elimina il curatore
 		        curatoreService.deleteCuratore(curatore);
 		    }
-		    return "redirect:/admin/managementCuratore"; // Reindirizza alla lista dei negozi
+		    return "redirect:/admin/managementCuratori"; // Reindirizza alla lista dei negozi
 		}
 
 }

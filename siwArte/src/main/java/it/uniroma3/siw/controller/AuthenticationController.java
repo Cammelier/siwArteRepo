@@ -94,7 +94,7 @@ public class AuthenticationController {
             curatore.setCredenziali(credenziali);
 
             // Salvataggio
-            curatoreService.save(curatore);
+            curatoreService.saveCuratore(curatore);
             credenzialiService.save(credenziali);
 
             model.addAttribute("curatore", curatore);
