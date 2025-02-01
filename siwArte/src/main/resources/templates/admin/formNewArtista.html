@@ -17,43 +17,35 @@
 
 	<!-- Content Section -->
 	<div class="boxtitle">
-		Aggiungi Nuovo Curatore
+		Aggiungi Nuova Artista
 	</div>
 	<div class="container2 infoBox">
-		<form th:action="@{/admin/saveCuratore}" method="post" enctype="multipart/form-data" class="form-signin">
+		<form th:action="@{/admin/saveArtista}" method="post" enctype="multipart/form-data" class="form-signin">
 			<div class="form-group">
 				<label for="nome">Nome</label>
-				<input type="text" class="form-control" id="nome" name="nome" required>
+				<input type="text" class="form-control" id="titolo" name="titolo" required>
 			</div>
 			<div class="form-group">
-				<label for="cognome">Cognome</label>
+				<label for="tecnica">Cognome</label>
 				<input type="text" class="form-control" id="cognome" name="cognome" required>
 			</div>
 			<div class="form-group">
-				<label for="codice fiscale">Codice Fiscale</label>
-				<input type="text" id="codice fiscale" name="cosice fiscale" class="form-control" required>
+				<label for="dataNascita">Data di Nascita</label>
+				<input type="date" id="dataNascita" name="dataNascita" class="form-control" required>
 			</div>
 			<div class="form-group">
-			    <label for="username">Username</label>
-				<input type="text" id="username" name="username" class="form-control" required>
-			</div>
-			<div class="form-group">
-				<label for="password">Password</label>
-				<input type="password" id="password" name="password" class="form-control" required>
-			</div>
-			<div class="form-group">
-				<label for="dataNascita">Data di nascita</label>
-				<input type="date" class="form-control" id="dataNascita" name="dataNascita" required>
-			</div>
-			<div class="form-group">
-				<label for="luogoNascita">Luogo di nascita</label>
+				<label for="luogoNascita">Luogo di Nascita</label>
 				<textarea class="form-control" id="luogoNascita" name="luogoNascita" rows="3" required></textarea>
 			</div>
+			<div class="form-group">
+				<label for="dataMorte">Data di Morte</label>
+				<input type="date" id="dataMorte" name="dataMorte" class="form-control" required>
+			</div
 			<div class="form-group">
 				<label for="immagine">Immagine</label>
 				<input type="file" class="form-control" id="immagine" name="immagine" required>
 			</div>
-			<button type="submit" class="btn btn-primary mt-3">Aggiungi Curatore</button>
+			<button type="submit" class="btn btn-primary mt-3">Aggiungi Artista</button>
 		</form>
 	</div>
 
