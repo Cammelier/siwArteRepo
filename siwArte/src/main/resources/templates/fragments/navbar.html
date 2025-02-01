@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Navbar</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Add the link to your CSS file if not already included -->
+</head>
+
+<body th:fragment="navbar">
+    <nav class="navbar navbar-expand-lg fixed-top navbarprinc">
+        <div class="container">
+            <a class="navbar-brand siwArte"
+               th:href="${ruolo == 'ADMIN' || ruolo == 'CURATORE'} ? @{/home} : @{/}">
+                <img src="/images/logo/logo.png" alt="Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mx-bici mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/artisti}">Artisti</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/opere}">Opere</a>
+                    </li>
+                    <li class="nav-item" th:if="${ruolo == 'ADMIN'}">
+                        <a class="nav-link" th:href="@{/admin/managementArtisti}">Gestione Artisti</a>
+                    </li>
+                    <li class="nav-item" th:if="${ruolo == 'ADMIN'}">
+                        <a class="nav-link" th:href="@{/admin/managementOpere}">Gestione Opere</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-bici mb-2 mb-lg-0">
+                    <li class="nav-item" th:if="${ruolo != 'ADMIN' && ruolo != 'CURATORE'}">
+                        <a class="nav-link" th:href="@{/login}">Accedi</a>
+                    </li>
+                    <li class="nav-item" th:if="${ruolo == 'ADMIN' || ruolo == 'CURATORE'}">
+                        <a class="nav-link" th:href="@{/logout}">Esci</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</body>
+</html>
