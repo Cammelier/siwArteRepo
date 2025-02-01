@@ -23,12 +23,11 @@ import it.uniroma3.siw.model.Credenziali;
 import it.uniroma3.siw.model.Curatore;
 import it.uniroma3.siw.service.CredenzialiService;
 import it.uniroma3.siw.service.CuratoreService;
-import it.uniroma3.siw.service.PinacotecaService;
+
 
 @Controller
 public class CuratoreController {
-	 @Autowired
-	    private PinacotecaService service;
+	 
 	 @Autowired
 	 	private CuratoreService curatoreService;
 	 @Autowired
@@ -44,10 +43,6 @@ public class CuratoreController {
 	        return "curatori";
 	    }
 
-	    @PostMapping
-	    public Curatore createCuratore( @RequestBody Curatore curatore) {
-	        return service.saveCuratore(curatore);
-	    }
 	    
 	    @GetMapping("/dettagliCur/{id}")
 		public String getCuratore(@PathVariable("id") Long id, Model model) {

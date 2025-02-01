@@ -23,7 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import it.uniroma3.siw.model.Artista;
 import it.uniroma3.siw.model.Credenziali;
 import it.uniroma3.siw.service.ArtistaService;
-import it.uniroma3.siw.service.PinacotecaService;
+
 
 
 @Controller

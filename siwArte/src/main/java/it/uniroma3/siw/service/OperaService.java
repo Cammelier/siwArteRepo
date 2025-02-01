@@ -2,10 +2,13 @@ package it.uniroma3.siw.service;
 
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import it.uniroma3.siw.model.Opera;
 import it.uniroma3.siw.repository.OperaRepository;
 import jakarta.transaction.Transactional;
 
+@Service
 public class OperaService {
 	private OperaRepository operaRepository;
 
@@ -38,8 +41,8 @@ public class OperaService {
         operaRepository.save(opera);
     }
 
-    public Opera findByName(String nome) {
-        Optional<Opera> result = operaRepository.findByNome(nome);
+    public Opera findByName(String titolo) {
+        Optional<Opera> result = operaRepository.findByTitolo(titolo);
         return result.orElse(null);
     }
 

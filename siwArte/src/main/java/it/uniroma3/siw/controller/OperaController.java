@@ -31,7 +31,6 @@ import it.uniroma3.siw.model.Opera;
 import it.uniroma3.siw.service.ArtistaService;
 import it.uniroma3.siw.service.CredenzialiService;
 import it.uniroma3.siw.service.OperaService;
-import it.uniroma3.siw.service.PinacotecaService;
 import jakarta.transaction.Transactional;
 
 @Controller
