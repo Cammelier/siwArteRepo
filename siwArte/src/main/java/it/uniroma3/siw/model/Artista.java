@@ -22,6 +22,7 @@ public class Artista {
 	    private LocalDate dataNascita;
 	    private String luogoNascita;
 	    private LocalDate dataMorte;
+	    private String immagine;
 	    
 	    @OneToMany(mappedBy = "artista", cascade = CascadeType.ALL, orphanRemoval = true)
 	    private List<Opera> opera = new ArrayList<>();
@@ -50,6 +51,16 @@ public class Artista {
 		}
 		public List<Opera> getOpera() {
 			return opera;
+		}
+
+
+		public String getImmagine() {
+			return immagine;
+		}
+
+
+		public void setImmagine(String immagine) {
+			this.immagine = immagine;
 		}
 
 

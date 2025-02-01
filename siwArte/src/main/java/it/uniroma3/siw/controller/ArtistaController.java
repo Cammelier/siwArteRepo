@@ -68,12 +68,51 @@ public class ArtistaController {
 		                                   @RequestParam("cognome") String cognome,
 		                                   @RequestParam("dataDiNascita") LocalDate dataDiNascita,
 		                                   @RequestParam("luogoNascita") String luogoNascita,
-		                                   @RequestParam("dataDiMore") String dataDiMorte)
+		                                   @RequestParam("dataDiMore") String dataDiMorte,
+		                                   @RequestParam("immagine")MultipartFile immagine)
 											{
 		    Artista existingArtista = artistaService.findById(id);
 		    if (existingArtista != null) {
 		        existingArtista.setNome(nome);
 		        artistaService.saveArtista(existingArtista);
+		        
+		     // Gestisci l'immagine
+		        if (!immagine.isEmpty()) {
+		            // Cancella la vecchia immagine
+		            String vecchiaImmagine = existingArtista.getImmagine();
+		            if (vecchiaImmagine != null && !vecchiaImmagine.isEmpty()) {
+		                File fileVecchiaImmagine = new File("src/main/resources/static/" + vecchiaImmagine);
+		                if (fileVecchiaImmagine.exists()) {
+		                    fileVecchiaImmagine.delete();
+		                }
+		            }
+		            // Salva la nuova immagine nella directory temporanea
+		            try {
+		                String nuovoNomeImmagine = "/uploads/artisti/" + immagine.getOriginalFilename();
+		                File nuovoFileImmagineTemp = new File(System.getProperty("java.io.tmpdir") + "/" + nuovoNomeImmagine);
+
+		                // Assicurati che la directory esista
+		                File directoryTemp = nuovoFileImmagineTemp.getParentFile();
+		                if (!directoryTemp.exists()) {
+		                    directoryTemp.mkdirs();
+		                }
+
+		                immagine.transferTo(nuovoFileImmagineTemp);
+
+		                // Copia l'immagine nella directory static
+		                File nuovoFileImmagine = new File("src/main/resources/static" + nuovoNomeImmagine);
+		                File directory = nuovoFileImmagine.getParentFile();
+		                if (!directory.exists()) {
+		                    directory.mkdirs();
+		                }
+		                Files.copy(nuovoFileImmagineTemp.toPath(), nuovoFileImmagine.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+		                existingArtista.setImmagine(nuovoNomeImmagine);
+		            } catch (IOException e) {
+		                e.printStackTrace();
+		                return "redirect:/admin/managementArtisti";
+		            }
+		        }
 		    }
 		    return "redirect:/admin/managementAristi";
 		}
@@ -90,14 +129,41 @@ public class ArtistaController {
 				@RequestParam("cognome") String cognome,
 				@RequestParam("dataDiNascita") LocalDate dataDiNascita,
 				@RequestParam("luogodiNascita") String luogoDinascita,
-				@RequestParam("dataDiMorte") LocalDate dataDiMorte) {
+				@RequestParam("dataDiMorte") LocalDate dataDiMorte,
+				@RequestParam("immagine")MultipartFile immagine) {
 			Artista artista = new Artista();
 			artista.setNome(nome);
 			artista.setCognome(cognome);
 			artista.setLuogoNascita(luogoDinascita);
 			artista.setDataNascita(dataDiNascita);
 			artista.setDataMorte(dataDiMorte);
-			
+			if (!immagine.isEmpty()) {
+				try {
+					String nuovoNomeImmagine = "/uploads/artisti/" + immagine.getOriginalFilename();
+					File nuovoFileImmagineTemp = new File(System.getProperty("java.io.tmpdir") + "/" + nuovoNomeImmagine);
+
+					// Assicurati che la directory esista
+					File directoryTemp = nuovoFileImmagineTemp.getParentFile();
+					if (!directoryTemp.exists()) {
+						directoryTemp.mkdirs();
+					}
+
+					immagine.transferTo(nuovoFileImmagineTemp);
+
+					// Copia l'immagine nella directory static
+					File nuovoFileImmagine = new File("src/main/resources/static" + nuovoNomeImmagine);
+					File directory = nuovoFileImmagine.getParentFile();
+					if (!directory.exists()) {
+						directory.mkdirs();
+					}
+					Files.copy(nuovoFileImmagineTemp.toPath(), nuovoFileImmagine.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+					artista.setImmagine(nuovoNomeImmagine);
+				} catch (IOException e) {
+					e.printStackTrace();
+					return "redirect:/admin/formNewArtista";
+				}
+			}
 			artistaService.saveArtista(artista);
 			
 			return "redirect:/admin/managementArtisti"; 
@@ -105,11 +171,21 @@ public class ArtistaController {
 		//delete artista from admin
 		@GetMapping("/admin/artista/delete/{id}")
 		public String deleteArtista(@PathVariable("id") Long id) {
-		    Artista artista = artistaService.findById(id);
-		    if (artista != null) {
-		        // Elimina l' artista
-		        artistaService.deleteArtista(artista);
-		    }
-		    return "redirect:/admin/managementArtisti"; // Reindirizza alla lista dei negozi
-		}
+			 Artista artista = artistaService.findById(id);
+			    if (artista != null) {
+
+			        // Cancella l'immagine associata
+			        String vecchiaImmagine = artista.getImmagine();
+			        if (vecchiaImmagine != null && !vecchiaImmagine.isEmpty()) {
+			            File immagineFile = new File("src/main/resources/static" + vecchiaImmagine);
+			            if (immagineFile.exists()) {
+			                immagineFile.delete();
+			            }
+			        }
+
+			        // Elimina il negozio
+			        artistaService.deleteArtista(artista);
+			    }
+			    return "redirect:/admin/managementNegozi"; // Reindirizza alla lista dei negozi
+			}
 }
