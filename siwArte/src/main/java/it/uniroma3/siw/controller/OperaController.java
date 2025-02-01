@@ -122,7 +122,7 @@ public class OperaController {
 			@RequestParam("referer") String referer) {
 		Artista artista = artistaService.findById(artistaId);
 		if (artista == null) {
-			return "redirect:/admin/managementArtisti";
+			return "redirect:/admin/managementOpere";
 		}
 
 		Opera opera = new Opera();
@@ -157,7 +157,7 @@ public class OperaController {
 				opera.setImmagine(nuovoNomeImmagine);
 			} catch (IOException e) {
 				e.printStackTrace();
-				return "redirect:/admin/managementArtisti";
+				return "redirect:/admin/managementOpere";
 			}
 		}
 		
