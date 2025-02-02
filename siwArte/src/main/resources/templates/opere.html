@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Opere</title>
+	<link rel="stylesheet" href="/css/style.css">
+	<!-- Bootstrap CSS -->
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Font Awesome CSS -->
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<!-- Include la navbar -->
+	<div th:replace="~{fragments/navbar :: navbar}"></div>
+	<div class="boxtitle">Lista Opere</div>
+
+	<!-- Sezione Filtri -->
+	<div class="container my-3">
+		<div class="row">
+			<div class="col-md-4">
+				<label for="filtroArtista">Artista:</label>
+				<select id="filtroArtista" class="form-control">
+					<option value="">Tutti</option>
+					<option th:each="artista : ${artisti}" th:value="${artista}" th:text="${artista}"></option>
+				</select>
+			</div>
+			<div class="col-md-4">
+				<label for="filtroTecnica">Tecnica:</label>
+				<select id="filtroTecnica" class="form-control">
+					<option value="">Tutte</option>
+					<option th:each="tecnica : ${tecniche}" th:value="${tecnica}" th:text="${tecnica}"></option>
+				</select>
+			</div>
+			<div class="col-md-4">
+				<label for="filtroAnno">Anno:</label>
+				<select id="filtroAnno" class="form-control">
+					<option value="">Tutti</option>
+					<option th:each="anno : ${anni}" th:value="${anno}" th:text="${anno}"></option>
+				</select>
+			</div>
+		</div>
+	</div>
+
+	<div class="container2" id="listaOpere">
+		<div th:each="opera : ${opere}" class="containerOpera" data-artista="${opera.artista}" data-tecnica="${opera.tecnica}" data-anno="${opera.anno}">
+			<div class="flip-box">
+				<div class="flip-box-inner">
+					<div class="flip-box-front">
+						<img th:src="@{${opera.immagine}}" alt="Immagine Opera" class="img-fluid">
+					</div>
+					<div class="flip-box-back">
+						<div class="card-body">
+							<h5 class="card-title" th:text="${negozio.nome}">Titolo Opera</h5>
+							<a th:href="@{/dettagliOpera/{id}(id=${opera.id})}" class="btn btn-warning">Dettagli</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Bootstrap JS and dependencies -->
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+	<script>
+		$(document).ready(function () {
+			$("#filtroArtista, #filtroTecnica, #filtroAnno").on("change", function () {
+				let artista = $("#filtroArtista").val().toLowerCase();
+				let tecnica = $("#filtroTecnica").val().toLowerCase();
+				let anno = $("#filtroAnno").val().toLowerCase();
+
+				$(".containerOpera").each(function () {
+					let operaArtista = $(this).data("artista").toLowerCase();
+					let operaTecnica = $(this).data("tecnica").toLowerCase();
+					let operaAnno = $(this).data("anno").toLowerCase();
+
+					if ((artista === "" || operaArtista === artista) &&
+						(tecnica === "" || operaTecnica === tecnica) &&
+						(anno === "" || operaAnno === anno)) {
+						$(this).show();
+					} else {
+						$(this).hide();
+					}
+				});
+			});
+		});
+	</script>
+</body>
+
+</html>
