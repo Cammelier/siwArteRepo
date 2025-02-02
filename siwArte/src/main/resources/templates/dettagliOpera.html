@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dettagli Opera</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Include la navbar -->
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <div class="boxtitle text-center">
+        Dettagli Opera
+    </div>
+    <div class="container2 d-flex align-items-start mb-2">
+        <div class="boxfotodet mr-4">
+            <img th:src="@{'/' + ${opera.immagine}}" alt="Immagine Opera" class="img-fluid">
+        </div>
+        <div class="d-flex flex-column">
+            <h3 class="card-title" th:text="${opera.titolo}" style="color: mediumspringgreen; font-family: 'Roboto', sans-serif;">Titolo Opera</h3>
+            <p class="card-text" style="color: #ffffff;"><strong>Tecnica: </strong><span th:text="${opera.tecnica}"> Tecnica dell'opera</span></p>
+			<p class="card-text" style="color: #ffffff;"><strong>Anno Realizzazione: </strong><span th:text="${opera.annoRealizazione}"> Anno Realizzazione</span></p>
+            <p class="card-text" style="color: #ffffff;"><strong>Artista: </strong><a th:href="@{/dettagliArt/{id}(id=${opera.artista.id})}" th:text="${opera.artista.nome}" style="color: mediumspringgreen;">Nome Negozio</a></p>
+        </div>
+        <div class="dettagliBiciScroll ml-4">
+            <div>
+                <h4 style="color: #ffffff;">Specifiche</h4>
+                <div class="scroll-container">
+                    <div th:each="specifica : ${bici.specifiche}" th:text="${specifica}" class="boxSpecifiche">Specifica</div>
+                </div>
+                <p th:if="${#lists.isEmpty(bici.specifiche)}" style="color: #ffffff;">Nessuna specifica disponibile.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="boxtitle mt-0 text-center">
+        Le altre opere di <span th:text="${opera.artista.nome}">Nome Artista</span>
+    </div>
+    <div class="container2">
+        <div th:unless="${#lists.isEmpty(oepra.artista.opere)}" class="dettagliScorrimento">
+            <div th:each="altraOpera : ${opera.artista.opere}" th:if="${altraOpera.id != opera.id}" class="containerOperaDettaglio">
+                <div class="flip-box">
+                    <div class="flip-box-inner">
+                        <div class="flip-box-front">
+                            <img th:src="@{'/' + ${altraOpera.immagine}}" alt="Immagine Opera" class="img-fluid">
+                        </div>
+                        <div class="flip-box-back">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${altraBici.nome}">Titolo Opera</h5>
+                                <a th:href="@{/dettagliOpera/{id}(id=${altraOpera.id})}" class="btn btn-warning">Dettagli</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:if="${#lists.isEmpty(opera.artista.opera) || opera.artista.opere.size() == 1}" class="text-center mt-2">
+            <p style="color: #ffffff;">Non ci sono altre opere per questo artista</p>
+            <i class="fas fa-frown" style="color: mediumspringgreen; font-size: 2em;"></i>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

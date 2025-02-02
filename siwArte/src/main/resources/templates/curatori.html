@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Artisti</title>
+	<title>Curatori</title>
 	<link rel="stylesheet" href="/css/style.css">
 	<!-- Bootstrap CSS -->
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -16,20 +16,20 @@
 	<!-- Include la navbar -->
 	<div th:replace="~{fragments/navbar :: navbar}"></div>
 	<div class="boxtitle">
-		Lista Artisti
+		Lista Curatori
 	</div>
 	<div class="container2">
 		<div th:each="artista : ${artisti}" class="containerArt">
 			<div class="flip-box">
 				<div class="flip-box-inner">
 					<div class="flip-box-front">
-						<img th:src="@{${artista.immagine}}" alt="Immagine Artista" class="img-fluid">
+						<img th:src="@{${curatore.immagine}}" alt="Immagine Curatore" class="img-fluid">
 					</div>
 					<div class="flip-box-back">
 						<div class="card-body">
-							<h5 class="card-title" th:text="${artista.nome}">Nome Artista</h5>
-							<p class="card-text" th:text="${artista.cognome}">Cognome Artista</p>
-							 <a th:href="@{/dettagliArt/{id}(id=${artista.id})}" class="btn btn-warning">Dettagli</a>
+							<h5 class="card-title" th:text="${curatore.nome}">Nome Curatore</h5>
+							<p class="card-text" th:text="${curatore.cognome}">Cognome Curatore</p>
+							 <a th:href="@{/dettagliCur/{id}(id=${curatore.id})}" class="btn btn-warning">Dettagli</a>
 						</div>
 					</div>
 				</div>
