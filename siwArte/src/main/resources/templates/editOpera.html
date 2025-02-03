@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Modifica Opera</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Custom CSS -->
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Include la navbar -->
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <div class="boxtitle">
+        Modifica Opera
+    </div>
+    <div class="container2 infoBox">
+        <form th:action="@{/editOpera}" th:object="${opera}" method="post" enctype="multipart/form-data" class="form-container">
+            <input type="hidden" th:field="*{id}" />
+            <input type="hidden" name="referer" th:value="${referer}" />
+            <div class="form-group">
+                <label for="nome">Titolo Opera</label>
+                <input type="text" class="form-control" id="titolo" th:field="*{titolo}">
+            </div>
+            <div class="form-group">
+                <label for="immagine">Nuova Opera</label>
+                <input type="file" class="form-control" id="immagine" name="immagine">
+            </div>
+            <div class="form-group">
+                <label for="tecnica">Tecnica</label>
+                <textarea class="form-control" id="tecnica" th:field="*{tecnica}"></textarea>
+            </div>
+			<div class="form-group">
+			     <label for="collocazione">Anno Realizzazione</label>
+			     <input type="date" class="form-control" id="annoRealizzazione" th:value="${annoRealizzazione}" readonly>
+			</div>
+            <div class="form-group">
+                <label for="collocazione">Collocazione</label>
+                <input type="text" class="form-control" id="collocazione" th:value="${collocazione}" readonly>
+            </div>
+			
+
+
+            <button type="submit" class="btn btn-primary">Salva Modifiche</button>
+        </form>
+    </div>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrap.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+     
+</body>
+</html>

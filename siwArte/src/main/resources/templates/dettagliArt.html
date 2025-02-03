@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dettagli Artista</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Include la navbar -->
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <div class="boxtitle text-center">
+        Dettagli Artista
+    </div>
+    <div class="container2 d-flex align-items-center mb-2">
+        <div class="boxfotodet mr-4">
+			<img th:src="@{'/' + ${artista.immagine}}" alt="Immagine Artista" class="img-fluid">
+        </div>
+        <div>
+            <h3 class="card-title" th:text="${artista.nome && artista.cognome}" style="color: mediumspringgreen; font-family: 'Roboto', sans-serif;">Nome e cognome  Artista</h3>
+            <p class="card-text" style="color: #ffffff;"><strong>Data di Nascita: </strong><span th:text="${artista.dataNascita}">Data di Nascita</span></p>
+            <p class="card-text" style="color: #ffffff;"><strong>Luogo di Nascita: </strong><span th:text="${artista.luogoNascita}">Luogo di Nascita</span></p>
+			<p class="card-text" style="color: #ffffff;"><strong>Data di Morte: </strong><span th:text="${artista.dataMorte}">Data di Morte</span></p>
+        </div>
+    </div>
+
+    <div class="boxtitle mt-0">
+        Lista Opere
+    </div>
+    <div class="container2">
+        <div th:if="${#lists.isEmpty(artista.opere)}" class="text-center mt-2">
+            <p style="color: #ffffff;">Non sono presenti opere per questo artista</p>
+            <i class="fas fa-frown" style="color: mediumspringgreen; font-size: 2em;"></i>
+        </div>
+        <div th:unless="${#lists.isEmpty(artista.opere)}" class="dettagliScorrimento">
+            <div th:each="bici : ${artista.opera}" class="containerArtistaDettaglio">
+                <div class="flip-box">
+                    <div class="flip-box-inner">
+                        <div class="flip-box-front">
+                            <img th:src="@{'/' + ${opera.immagine}}" alt="Immagine Opera" class="img-fluid">
+                        </div>
+                        <div class="flip-box-back">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${opera.titolo}">Titolo opera</h5>
+                                <p class="card-text" th:text="${opera.annoRealizzazione}">Anno realizzazione </p>
+                                <a th:href="@{/dettagliOpera/{id}(id=${opera.id})}" class="btn btn-warning">Dettagli</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrap.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
