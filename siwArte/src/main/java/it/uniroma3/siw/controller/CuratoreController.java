@@ -53,7 +53,7 @@ public class CuratoreController {
 	    
 	  //managment admin
 		@GetMapping(value = "/admin/managementCuratori")
-		public String managementNegozi(Model model) {
+		public String managemenCuratori(Model model) {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			if (!(authentication instanceof AnonymousAuthenticationToken)) {
 				UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -104,33 +104,40 @@ public class CuratoreController {
 		}
 		
 		@PostMapping("/admin/saveCuratore")
-		public String saveNegozio(@RequestParam("nome") String nome,
-				@RequestParam("cognome") String cognome,
-				@RequestParam("dataDiNascita") LocalDate dataDiNascita,
-				@RequestParam("codiceFiscale") String codiceFiscale,
-				@RequestParam("luogoDinascita") String luogoDiNascita,
-				@RequestParam("username") String username,
-				@RequestParam("password") String password) {
-			Curatore curatore = new Curatore();
-			curatore.setNome(nome);
-			curatore.setCognome(cognome);
-			curatore.setCodiceFiscale(codiceFiscale);
-			curatore.setLuogoNascita(luogoDiNascita);
-			curatore.setDataNascita(dataDiNascita);
-			
-			Credenziali credenziali = new Credenziali();
-			credenziali.setUsername(username);
-			credenziali.setPassword(passwordEncoder.encode(password));
-			credenziali.setRuolo(Credenziali.CURATORE_ROLE);
-			credenziali.setCuratore(curatore);
-			curatore.setCredenziali(credenziali);
-			
-			credenzialiService.save(credenziali);
-			
-			curatoreService.saveCuratore(curatore);
-			
-			return "redirect:/admin/managementcuratori";
+		public String saveCuratore(@RequestParam("nome") String nome,
+		                           @RequestParam("cognome") String cognome,
+		                           @RequestParam("dataDiNascita") LocalDate dataDiNascita,
+		                           @RequestParam("codiceFiscale") String codiceFiscale,
+		                           @RequestParam("luogoDinascita") String luogoDiNascita,
+		                           @RequestParam("username") String username,
+		                           @RequestParam("password") String password) {
+		    // 1️⃣ Creazione del curatore
+		    Curatore curatore = new Curatore();
+		    curatore.setNome(nome);
+		    curatore.setCognome(cognome);
+		    curatore.setCodiceFiscale(codiceFiscale);
+		    curatore.setLuogoNascita(luogoDiNascita);
+		    curatore.setDataNascita(dataDiNascita);
+
+		    // 🔹 Salva il curatore PRIMA di assegnargli le credenziali
+		    curatore = curatoreService.saveCuratore(curatore);
+
+		    // 2️⃣ Creazione delle credenziali
+		    Credenziali credenziali = new Credenziali();
+		    credenziali.setUsername(username);
+		    credenziali.setPassword(passwordEncoder.encode(password));
+		    credenziali.setRuolo(Credenziali.CURATORE_ROLE);
+
+		    // 🔹 Ora assegna il curatore alle credenziali (per evitare problemi di transitorietà)
+		    credenziali.setCuratore(curatore);
+		    curatore.setCredenziali(credenziali);
+
+		    // 🔹 Salva le credenziali DOPO aver salvato il curatore
+		    credenzialiService.save(credenziali);
+
+		    return "redirect:/admin/managementCuratori";
 		}
+
 		
 		//delete curatore from admin
 		@GetMapping("/admin/curatore/delete/{id}")

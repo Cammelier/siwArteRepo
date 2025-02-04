@@ -22,7 +22,8 @@ public class Credenziali {
 	private String password;
 	private String ruolo;
 	
-	@OneToOne
+	
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Curatore curatore;
 
 	public Long getId() {
