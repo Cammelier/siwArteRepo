@@ -9,6 +9,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import it.uniroma3.siw.model.Artista;
 import it.uniroma3.siw.model.Credenziali;
 import it.uniroma3.siw.service.ArtistaService;
+import it.uniroma3.siw.service.CredenzialiService;
 
 
 
@@ -34,12 +39,15 @@ public class ArtistaController {
 		
 		@Autowired
 		private ArtistaService artistaService; 
+		
+		@Autowired
+		private CredenzialiService credenzialiService;
 
 		//view all
 		@GetMapping("/artisti")
 		public String showArtisti(Model model) {
 			model.addAttribute("artisti", artistaService.getAllArtisti());
-			return "artisti"; //restituisce il nome della vista
+			return "artisti.html"; //restituisce il nome della vista
 		}
 		
 	    
@@ -60,6 +68,20 @@ public class ArtistaController {
 		    }
 		    model.addAttribute("artista", artista);
 		    return "/editArtista";
+		}
+		@GetMapping(value = "/admin/managementArtisti")
+		public String managementOpere(Model model) {
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			if (!(authentication instanceof AnonymousAuthenticationToken)) {
+				UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+				Credenziali credenziali = credenzialiService.getCredenziali(userDetails.getUsername());
+
+				if (credenziali.getRuolo().equals(Credenziali.ADMIN_ROLE)) {
+					model.addAttribute("artista", artistaService.getAllArtisti());
+					return "/admin/managementArtisti";
+				}
+			}
+			return "redirect:/";
 		}
 
 		@PostMapping("/admin/updateArtista")
@@ -186,6 +208,6 @@ public class ArtistaController {
 			        // Elimina il negozio
 			        artistaService.deleteArtista(artista);
 			    }
-			    return "redirect:/admin/managementNegozi"; // Reindirizza alla lista dei negozi
+			    return "redirect:/admin/managementArtisti"; // Reindirizza alla lista dei negozi
 			}
 }

@@ -54,7 +54,7 @@ public class AuthenticationController {
                 return "admin/indexAdmin.html";
             }
             if (CURATORE_ROLE.equals(credenziali.getRuolo())) {
-                return "curatore/dashboard";
+                return "index.html";
             }
         }
         return "index";
@@ -117,10 +117,10 @@ public class AuthenticationController {
             Credenziali credenziali = credenzialiService.getCredenziali(userDetails.getUsername());
 
             if (ADMIN_ROLE.equals(credenziali.getRuolo())) {
-                return "admin/dashboard";
+                return "admin/indexAdmin.html";
             }
             if (CURATORE_ROLE.equals(credenziali.getRuolo())) {
-                return "curatore/dashboard";
+                return "index.html";
             }
         }
         return "index";

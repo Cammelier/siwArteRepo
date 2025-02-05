@@ -18,6 +18,7 @@ public class ArtistaService {
     public List<Artista> getAllArtisti() {
         return (List<Artista>) artistaRepository.findAll();
     }
+    
 
     // Recupera un artista per ID
     public Optional<Artista> getArtistaById(Long id) {

@@ -49,7 +49,7 @@ public class OperaController {
 	@GetMapping("/opere")
 	public String showOpera(Model model) {
 		model.addAttribute("opere", operaService.findAll());
-		return "opera.html"; // restituisce il nome della vista
+		return "opere.html"; // restituisce il nome della vista
 	}
 	
 	@GetMapping("/dettagliOpera/{id}")

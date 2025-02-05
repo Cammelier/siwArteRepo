@@ -2,6 +2,7 @@ package it.uniroma3.siw.service;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.uniroma3.siw.model.Opera;
@@ -10,6 +11,7 @@ import jakarta.transaction.Transactional;
 
 @Service
 public class OperaService {
+	@Autowired
 	private OperaRepository operaRepository;
 
     public Opera findById(Long id) {
@@ -25,11 +27,11 @@ public class OperaService {
         operaRepository.save(opera);
     }
 
-    public Optional<Opera> getAuto(Long id) {
+    public Optional<Opera> getOpera(Long id) {
         return operaRepository.findById(id);
     }
 
-    public Iterable<Opera> getAllAuto() {
+    public Iterable<Opera> getAllOpere() {
         return operaRepository.findAll();
     }
 
