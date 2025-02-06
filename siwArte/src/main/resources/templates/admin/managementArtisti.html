@@ -26,7 +26,7 @@
                     <div class="flip-box-back">
                         <div class="card-body">
                             <h5 class="card-title" th:text="${artista.nome}">Nome</h5>
-                            <a th:href="@{/formNewOpera(artistaId=${artista.id})}" class="btn btn-primary">Aggiungi Opera</a>
+                            <a th:href="@{/formNewArtista(artistaId=${artista.id})}" class="btn btn-primary">Aggiungi Artista</a>
                             <a th:href="@{/editArtista(id=${artista.id})}" class="btn btn-warning">Modifica</a>
                             <a th:href="@{/admin/artista/delete/{id}(id=${artista.id})}" class="btn btn-danger">Elimina</a>
                         </div>

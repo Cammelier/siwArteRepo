@@ -70,7 +70,7 @@ public class ArtistaController {
 		    return "/editArtista";
 		}
 		@GetMapping(value = "/admin/managementArtisti")
-		public String managementOpere(Model model) {
+		public String managementArtisti(Model model) {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			if (!(authentication instanceof AnonymousAuthenticationToken)) {
 				UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -90,7 +90,7 @@ public class ArtistaController {
 		                                   @RequestParam("cognome") String cognome,
 		                                   @RequestParam("dataDiNascita") LocalDate dataDiNascita,
 		                                   @RequestParam("luogoNascita") String luogoNascita,
-		                                   @RequestParam("dataDiMore") String dataDiMorte,
+		                                   @RequestParam("dataDiMorte") String dataDiMorte,
 		                                   @RequestParam("immagine")MultipartFile immagine)
 											{
 		    Artista existingArtista = artistaService.findById(id);
