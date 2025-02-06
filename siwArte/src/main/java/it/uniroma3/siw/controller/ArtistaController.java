@@ -32,7 +32,7 @@ import it.uniroma3.siw.service.CredenzialiService;
 
 
 @Controller
-@RequestMapping("/api/artisti")
+
 public class ArtistaController {
 	 	
 		
@@ -47,7 +47,7 @@ public class ArtistaController {
 		@GetMapping("/artisti")
 		public String showArtisti(Model model) {
 			model.addAttribute("artisti", artistaService.getAllArtisti());
-			return "artisti.html"; //restituisce il nome della vista
+			return "artisti"; //restituisce il nome della vista
 		}
 		
 	    
