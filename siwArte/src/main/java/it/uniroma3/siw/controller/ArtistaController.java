@@ -88,9 +88,9 @@ public class ArtistaController {
 		public String updateArtista(@RequestParam("id") Long id,
 		                                   @RequestParam("nome") String nome,
 		                                   @RequestParam("cognome") String cognome,
-		                                   @RequestParam("dataDiNascita") LocalDate dataDiNascita,
+		                                   @RequestParam("dataNascita") LocalDate dataNascita,
 		                                   @RequestParam("luogoNascita") String luogoNascita,
-		                                   @RequestParam("dataDiMorte") String dataDiMorte,
+		                                   @RequestParam("dataMorte") String dataMorte,
 		                                   @RequestParam("immagine")MultipartFile immagine)
 											{
 		    Artista existingArtista = artistaService.findById(id);
@@ -149,16 +149,16 @@ public class ArtistaController {
 		@PostMapping("/admin/saveArtista")
 		public String saveArtista(@RequestParam("nome") String nome,
 				@RequestParam("cognome") String cognome,
-				@RequestParam("dataDiNascita") LocalDate dataDiNascita,
-				@RequestParam("luogodiNascita") String luogoDinascita,
-				@RequestParam("dataDiMorte") LocalDate dataDiMorte,
+				@RequestParam("dataNascita") LocalDate dataNascita,
+				@RequestParam("luogoNascita") String luogoNascita,
+				@RequestParam("dataMorte") LocalDate dataMorte,
 				@RequestParam("immagine")MultipartFile immagine) {
 			Artista artista = new Artista();
 			artista.setNome(nome);
 			artista.setCognome(cognome);
-			artista.setLuogoNascita(luogoDinascita);
-			artista.setDataNascita(dataDiNascita);
-			artista.setDataMorte(dataDiMorte);
+			artista.setLuogoNascita(luogoNascita);
+			artista.setDataNascita(dataNascita);
+			artista.setDataMorte(dataMorte);
 			if (!immagine.isEmpty()) {
 				try {
 					String nuovoNomeImmagine = "/uploads/artisti/" + immagine.getOriginalFilename();

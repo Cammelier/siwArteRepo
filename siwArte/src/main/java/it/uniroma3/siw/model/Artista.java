@@ -25,11 +25,10 @@ public class Artista {
 	    private String immagine;
 	    
 	    @OneToMany(mappedBy = "artista", cascade = CascadeType.ALL, orphanRemoval = true)
-	    private List<Opera> opera = new ArrayList<>();
+	    private List<Opera> opere = new ArrayList<>();
 		public Long getId() {
 			return id;
 		}
-		
 		
 		public void setId(Long id) {
 			this.id = id;
@@ -49,8 +48,8 @@ public class Artista {
 		public LocalDate getDataNascita() {
 			return dataNascita;
 		}
-		public List<Opera> getOpera() {
-			return opera;
+		public List<Opera> getOpere() {
+			return opere;
 		}
 
 
@@ -64,8 +63,8 @@ public class Artista {
 		}
 
 
-		public void setOpere(List<Opera> opera) {
-			this.opera = opera;
+		public void setOpere(List<Opera> opere) {
+			this.opere= opere;
 		}
 
 

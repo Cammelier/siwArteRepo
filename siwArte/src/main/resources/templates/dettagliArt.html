@@ -20,11 +20,11 @@
         Dettagli Artista
     </div>
     <div class="container2 d-flex align-items-center mb-2">
-        <div class="boxfotodet mr-4">
-			<img th:src="@{'/' + ${artista.immagine}}" alt="Immagine Artista" class="img-fluid">
-        </div>
+		<div class="boxfotodet mr-4">
+					<img th:src="@{'/' + ${artista.immagine}}" alt="Immagine Artista" class="img-fluid">
+		        </div>
         <div>
-            <h3 class="card-title" th:text="${artista.nome && artista.cognome}" style="color: mediumspringgreen; font-family: 'Roboto', sans-serif;">Nome e cognome  Artista</h3>
+            <h3 class="card-title" th:text="${artista.nome + ' ' + artista.cognome}" style="color: mediumspringgreen; font-family: 'Roboto', sans-serif;">Nome e cognome  Artista</h3>
             <p class="card-text" style="color: #ffffff;"><strong>Data di Nascita: </strong><span th:text="${artista.dataNascita}">Data di Nascita</span></p>
             <p class="card-text" style="color: #ffffff;"><strong>Luogo di Nascita: </strong><span th:text="${artista.luogoNascita}">Luogo di Nascita</span></p>
 			<p class="card-text" style="color: #ffffff;"><strong>Data di Morte: </strong><span th:text="${artista.dataMorte}">Data di Morte</span></p>
@@ -40,7 +40,7 @@
             <i class="fas fa-frown" style="color: mediumspringgreen; font-size: 2em;"></i>
         </div>
         <div th:unless="${#lists.isEmpty(artista.opere)}" class="dettagliScorrimento">
-            <div th:each="bici : ${artista.opera}" class="containerArtistaDettaglio">
+            <div th:each="opera : ${artista.opere}" class="containerArtistaDettaglio">
                 <div class="flip-box">
                     <div class="flip-box-inner">
                         <div class="flip-box-front">

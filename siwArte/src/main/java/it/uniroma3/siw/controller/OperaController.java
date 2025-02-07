@@ -67,7 +67,7 @@ public class OperaController {
 	        // Rimuovi il riferimento all'artista
 	        Artista artista = opera.getArtista();
 	        if (artista != null) {
-	            artista.getOpera().remove(opera);
+	            artista.getOpere().remove(opera);
 	            opera.setArtista(artista);
 				artistaService.saveArtista(artista); // Salva le modifiche del negozio
 	        }

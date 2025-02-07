@@ -23,7 +23,7 @@
 		<form th:action="@{/admin/saveArtista}" method="post" enctype="multipart/form-data" class="form-signin">
 			<div class="form-group">
 				<label for="nome">Nome</label>
-				<input type="text" class="form-control" id="titolo" name="titolo" required>
+				<input type="text" class="form-control" id="nome" name="nome" required>
 			</div>
 			<div class="form-group">
 				<label for="tecnica">Cognome</label>
@@ -35,12 +35,12 @@
 			</div>
 			<div class="form-group">
 				<label for="luogoNascita">Luogo di Nascita</label>
-				<textarea class="form-control" id="luogoNascita" name="luogoNascita" rows="3" required></textarea>
+				<input type="text" id="luogoNascita" name="luogoNascita" class="form-control" required></input>
 			</div>
 			<div class="form-group">
 				<label for="dataMorte">Data di Morte</label>
 				<input type="date" id="dataMorte" name="dataMorte" class="form-control" required>
-			</div
+			</div>
 			<div class="form-group">
 				<label for="immagine">Immagine</label>
 				<input type="file" class="form-control" id="immagine" name="immagine" required>
