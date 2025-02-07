@@ -113,6 +113,17 @@ public class OperaController {
 		return "admin/formNewOpera";
 	}
 	
+	@GetMapping("/editBici")
+	public String showEditOperaForm(@RequestParam("id") Long operaId, Model model, @RequestHeader(value = "referer", required = false) String referer) {
+		Opera opera = operaService.findById(operaId);
+		if (opera == null) {
+			return "redirect:/admin/managementOpera";
+		}
+		
+		model.addAttribute("opera", opera);
+		model.addAttribute("referer", referer);
+		return "editOpera";
+	}
 	
 	@PostMapping("admin/formNewOpera")
 	public String addOpera(@RequestParam("titolo") String titolo,
@@ -234,5 +245,6 @@ public class OperaController {
 		// Reindirizza esclusivamente alla pagina precedente
 		return "redirect:" + referer;
 	}
+	
 
 }
