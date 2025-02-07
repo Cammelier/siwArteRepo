@@ -20,30 +20,44 @@
 		Aggiungi Nuova Opera
 	</div>
 	<div class="container2 infoBox">
-		<form th:action="@{/admin/saveOpera}" method="post" enctype="multipart/form-data" class="form-signin">
-			<div class="form-group">
-				<label for="nome">Titolo</label>
-				<input type="text" class="form-control" id="titolo" name="titolo" required>
-			</div>
-			<div class="form-group">
-				<label for="tecnica">Tecnica</label>
-				<input type="text" class="form-control" id="tecnica" name="tecnica" required>
-			</div>
-			<div class="form-group">
-				<label for="username">Anno Realizzazione</label>
-				<input type="date" id="anno realizzazione" name="anno realizzazione" class="form-control" required>
-			</div>
-			<div class="form-group">
-				<label for="collocazione">Collocazione</label>
-				<textarea class="form-control" id="collocazione" name="collocazione" rows="3" required></textarea>
-			</div>
-			<div class="form-group">
-				<label for="immagine">Immagine</label>
-				<input type="file" class="form-control" id="immagine" name="immagine" required>
-			</div>
-			<button type="submit" class="btn btn-primary mt-3">Aggiungi Opera</button>
+		<form th:action="@{/formNewOpera}" method="post" enctype="multipart/form-data" class="form-signin">
+		    <div class="form-group">
+		        <label for="titolo">Titolo</label>
+		        <input type="text" class="form-control" id="titolo" name="titolo" required>
+		    </div>
+
+		    <div class="form-group">
+		        <label for="tecnica">Tecnica</label>
+		        <input type="text" class="form-control" id="tecnica" name="tecnica" required>
+		    </div>
+
+		    <div class="form-group">
+		        <label for="annoRealizzazione">Anno Realizzazione</label>
+		        <input type="number" id="annoRealizzazione" name="annoRealizzazione" class="form-control" required>
+		    </div>
+
+		    <div class="form-group">
+		        <label for="collocazione">Collocazione</label>
+		        <textarea class="form-control" id="collocazione" name="collocazione" rows="3" required></textarea>
+		    </div>
+
+		    <div class="form-group">
+		        <label for="artistaId">Artista</label>
+		        <select class="form-control" id="artistaId" name="artistaId" required>
+		            <option th:each="artista : ${artisti}" th:value="${artista.id}" th:text="${artista.nome}"></option>
+		        </select>
+		    </div>
+
+		    <div class="form-group">
+		        <label for="immagine">Immagine</label>
+		        <input type="file" class="form-control" id="immagine" name="immagine" required>
+		    </div>
+
+		    <input type="hidden" name="referer" th:value="${referer}">
+
+		    <button type="submit" class="btn btn-primary mt-3">Aggiungi Opera</button>
 		</form>
-	</div>
+
 
 	<!-- Bootstrap JS and dependencies -->
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

@@ -46,7 +46,7 @@ public class ArtistaController {
 		//view all
 		@GetMapping("/artisti")
 		public String showArtisti(Model model) {
-			model.addAttribute("artisti", artistaService.getAllArtisti());
+			model.addAttribute("artisti", artistaService.findAll());
 			return "artisti"; //restituisce il nome della vista
 		}
 		
@@ -77,8 +77,8 @@ public class ArtistaController {
 				Credenziali credenziali = credenzialiService.getCredenziali(userDetails.getUsername());
 
 				if (credenziali.getRuolo().equals(Credenziali.ADMIN_ROLE)) {
-					model.addAttribute("artista", artistaService.getAllArtisti());
-					return "/admin/managementArtisti";
+					model.addAttribute("artisti", artistaService.findAll());
+					return "/admin/managementArtisti.html";
 				}
 			}
 			return "redirect:/";
@@ -90,7 +90,7 @@ public class ArtistaController {
 		                                   @RequestParam("cognome") String cognome,
 		                                   @RequestParam("dataNascita") LocalDate dataNascita,
 		                                   @RequestParam("luogoNascita") String luogoNascita,
-		                                   @RequestParam("dataMorte") String dataMorte,
+		                                   @RequestParam("dataMorte") LocalDate dataMorte,
 		                                   @RequestParam("immagine")MultipartFile immagine)
 											{
 		    Artista existingArtista = artistaService.findById(id);

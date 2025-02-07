@@ -99,26 +99,28 @@ public class OperaController {
 		return "redirect:/";
 	}
 	
-	@GetMapping("/formNewArtista")
+	@GetMapping("/formNewOpera")
 	public String showFormNewArtista(@RequestParam(value = "artistaId", required = false) Long operaId, Model model, @RequestHeader(value = "referer", required = false) String referer) {
 		if (operaId != null) {
 			Artista artista = artistaService.findById(operaId);
 			model.addAttribute("artista", artista);
 		} else {
-			Iterable<Artista> artisti = artistaService.getAllArtisti();
+			Iterable<Artista> artisti = artistaService.findAll();
 			model.addAttribute("artisti", artisti);
 		}
 		model.addAttribute("opera", new Opera());
 		model.addAttribute("referer", referer);
-		return "/formNewOpera";
+		return "admin/formNewOpera";
 	}
 	
-	@PostMapping("/formNewOpera")
+	
+	@PostMapping("admin/formNewOpera")
 	public String addOpera(@RequestParam("titolo") String titolo,
 			@RequestParam("immagine") MultipartFile immagine,
 			@RequestParam("artistaId") Long artistaId,
 			@RequestParam("annoRealizzazione") int annorealizzazione,
 			@RequestParam("tecnica") String tecnica,
+			@RequestParam("collocazione") String collocazione,
 			@RequestParam("referer") String referer) {
 		Artista artista = artistaService.findById(artistaId);
 		if (artista == null) {
@@ -129,6 +131,7 @@ public class OperaController {
 		opera.setTitolo(titolo);
 		opera.setTecnica(tecnica);
 		opera.setAnnoRealizzazione(annorealizzazione);
+		opera.setCollocazione(collocazione);
 		opera.setArtista(artista);
 
 		// Gestisci l'immagine
@@ -173,6 +176,7 @@ public class OperaController {
 			@RequestParam("tecnica") String tecnica,
 			@RequestParam("immagine") MultipartFile immagine,
 			@RequestParam ("annoRealizzazione") int annoRealizzazione,
+			@RequestParam("collocazione") String collocazione,
 			@RequestParam("referer") String referer) {
 		Opera opera = operaService.findById(id);
 		if (opera == null) {
@@ -181,6 +185,7 @@ public class OperaController {
 
 		opera.setTitolo(titolo);
 		opera.setAnnoRealizzazione(annoRealizzazione);
+		opera.setCollocazione(collocazione);
 		opera.setTecnica(tecnica);
 
 		// Gestisci l'immagine

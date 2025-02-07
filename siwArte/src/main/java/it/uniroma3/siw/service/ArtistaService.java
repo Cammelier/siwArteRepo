@@ -15,7 +15,7 @@ public class ArtistaService {
     private ArtistaRepository artistaRepository;
 
     // Recupera tutti gli artisti
-    public List<Artista> getAllArtisti() {
+    public Iterable<Artista> findAll() {
         return (List<Artista>) artistaRepository.findAll();
     }
     
