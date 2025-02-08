@@ -83,15 +83,15 @@ public class CuratoreController {
 		                                   @RequestParam("nome") String nome,
 		                                   @RequestParam("cognome") String cognome,
 		                                   @RequestParam("codiceFiscale") String codiceFiscale,
-										   @RequestParam("dataDiNascita") LocalDate dataDiNascita,
-										   @RequestParam("luogoDinascita") String luogoDinascita) {
+										   @RequestParam("dataNascita") LocalDate dataNascita,
+										   @RequestParam("luogoNascita") String luogoNascita) {
 		    Curatore existingCuratore = curatoreService.findById(id);
 		    if (existingCuratore != null) {
 		        existingCuratore.setNome(nome);
 		        existingCuratore.setCognome(cognome);
 		        existingCuratore.setCodiceFiscale(codiceFiscale);
-		        existingCuratore.setDataNascita(dataDiNascita);
-		        existingCuratore.setLuogoNascita(luogoDinascita);
+		        existingCuratore.setDataNascita(dataNascita);
+		        existingCuratore.setLuogoNascita(luogoNascita);
 		    curatoreService.saveCuratore(existingCuratore);
 		}
 		return "redirect:/admin/managementCuratori";
@@ -106,9 +106,9 @@ public class CuratoreController {
 		@PostMapping("/admin/saveCuratore")
 		public String saveCuratore(@RequestParam("nome") String nome,
 		                           @RequestParam("cognome") String cognome,
-		                           @RequestParam("dataDiNascita") LocalDate dataDiNascita,
+		                           @RequestParam("dataNascita") LocalDate dataNascita,
 		                           @RequestParam("codiceFiscale") String codiceFiscale,
-		                           @RequestParam("luogoDinascita") String luogoDiNascita,
+		                           @RequestParam("luogoNascita") String luogoNascita,
 		                           @RequestParam("username") String username,
 		                           @RequestParam("password") String password) {
 		    // 1️⃣ Creazione del curatore
@@ -116,8 +116,8 @@ public class CuratoreController {
 		    curatore.setNome(nome);
 		    curatore.setCognome(cognome);
 		    curatore.setCodiceFiscale(codiceFiscale);
-		    curatore.setLuogoNascita(luogoDiNascita);
-		    curatore.setDataNascita(dataDiNascita);
+		    curatore.setLuogoNascita(luogoNascita);
+		    curatore.setDataNascita(dataNascita);
 
 		    // 🔹 Salva il curatore PRIMA di assegnargli le credenziali
 		    curatore = curatoreService.saveCuratore(curatore);
