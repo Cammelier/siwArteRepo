@@ -1,5 +1,6 @@
 package it.uniroma3.siw.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +32,6 @@ public class OperaService {
         return operaRepository.findById(id);
     }
 
-    public Iterable<Opera> getAllOpere() {
-        return operaRepository.findAll();
-    }
 
     public void deleteOpera(Long id) {
         operaRepository.deleteById(id);
@@ -51,4 +49,13 @@ public class OperaService {
     public void deleteOpera(Opera opera) {
         operaRepository.delete(opera);
     }
+
+    public List<Integer> findAllAnni() {
+        return operaRepository.findDistinctAnni();
+    }
+    public List<String> findAllTecniche() {
+        return operaRepository.findDistinctTecniche();
+    }
+
+
 }

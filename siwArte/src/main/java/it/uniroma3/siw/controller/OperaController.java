@@ -46,11 +46,17 @@ public class OperaController {
 	private CredenzialiService credenzialiService;
 	
 	
+
 	@GetMapping("/opere")
 	public String showOpera(Model model) {
-		model.addAttribute("opere", operaService.findAll());
-		return "opere.html"; // restituisce il nome della vista
+	    model.addAttribute("opere", operaService.findAll());
+	    model.addAttribute("artisti", artistaService.findAll()); // Aggiungi lista artisti
+	    model.addAttribute("tecniche", operaService.findAllTecniche()); // Aggiungi tecniche
+	    model.addAttribute("anni", operaService.findAllAnni()); // Aggiungi anni
+	    return "opere";
 	}
+
+
 	
 	@GetMapping("/dettagliOpera/{id}")
 	public String getOpera(@PathVariable("id") Long id, Model model) {
@@ -92,7 +98,7 @@ public class OperaController {
 			Credenziali credenziali = credenzialiService.getCredenziali(userDetails.getUsername());
 
 			if (credenziali.getRuolo().equals(Credenziali.ADMIN_ROLE)) {
-				model.addAttribute("opera", operaService.findAll());
+				model.addAttribute("opere", operaService.findAll());
 				return "/admin/managementOpere";
 			}
 		}
@@ -100,7 +106,7 @@ public class OperaController {
 	}
 	
 	@GetMapping("/formNewOpera")
-	public String showFormNewArtista(@RequestParam(value = "artistaId", required = false) Long operaId, Model model, @RequestHeader(value = "referer", required = false) String referer) {
+	public String showFormNewOpera(@RequestParam(value = "artistaId", required = false) Long operaId, Model model,@RequestHeader(value = "referer", required = false, defaultValue = "/admin/managementOpere") String referer) {
 		if (operaId != null) {
 			Artista artista = artistaService.findById(operaId);
 			model.addAttribute("artista", artista);
@@ -113,7 +119,7 @@ public class OperaController {
 		return "admin/formNewOpera";
 	}
 	
-	@GetMapping("/editBici")
+	@GetMapping("/editOpera")
 	public String showEditOperaForm(@RequestParam("id") Long operaId, Model model, @RequestHeader(value = "referer", required = false) String referer) {
 		Opera opera = operaService.findById(operaId);
 		if (opera == null) {
@@ -132,7 +138,7 @@ public class OperaController {
 			@RequestParam("annoRealizzazione") int annorealizzazione,
 			@RequestParam("tecnica") String tecnica,
 			@RequestParam("collocazione") String collocazione,
-			@RequestParam("referer") String referer) {
+			@RequestParam(value = "referer", required = false, defaultValue = "/admin/managementOpere") String referer) {
 		Artista artista = artistaService.findById(artistaId);
 		if (artista == null) {
 			return "redirect:/admin/managementOpere";
@@ -188,7 +194,7 @@ public class OperaController {
 			@RequestParam("immagine") MultipartFile immagine,
 			@RequestParam ("annoRealizzazione") int annoRealizzazione,
 			@RequestParam("collocazione") String collocazione,
-			@RequestParam("referer") String referer) {
+			@RequestParam(value = "referer", required = false, defaultValue = "/admin/managementOpere") String referer) {
 		Opera opera = operaService.findById(id);
 		if (opera == null) {
 			return "redirect:/Opere";
