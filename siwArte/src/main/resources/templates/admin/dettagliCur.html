@@ -21,10 +21,11 @@
     </div>
     <div class="container2 d-flex align-items-center mb-2">
         <div>
-            <h3 class="card-title" th:text="${curatore.nome && curatore.cognome}" style="color: mediumspringgreen; font-family: 'Roboto', sans-serif;">Nome e cognome  Curatore</h3>
+            <h3 class="card-title" th:text="${curatore.nome + ' ' + curatore.cognome}" style="color: mediumspringgreen; font-family: 'Roboto', sans-serif;">Nome e cognome  Curatore</h3>
             <p class="card-text" style="color: #ffffff;"><strong>Data di Nascita: </strong><span th:text="${curatore.dataNascita}">Data di Nascita</span></p>
             <p class="card-text" style="color: #ffffff;"><strong>Luogo di Nascita: </strong><span th:text="${curatore.luogoNascita}">Luogo di Nascita</span></p>
 			<p class="card-text" style="color: #ffffff;"><strong>Codice Fiscale: </strong><span th:text="${curatore.codiceFiscale}">Codice Fiscale</span></p>
+			<p class="card-text" style="color: #ffffff;"><strong>Area gestita: </strong><span th:text="${curatore.area}">Area gestita</span></p>
         </div>
     </div>
 

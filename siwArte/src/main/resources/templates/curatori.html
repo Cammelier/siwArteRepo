@@ -27,8 +27,7 @@
 					</div>
 					<div class="flip-box-back">
 						<div class="card-body">
-							<h5 class="card-title" th:text="${curatore.nome}">Nome Curatore</h5>
-							<p class="card-text" th:text="${curatore.cognome}">Cognome Curatore</p>
+							<h5 class="card-title" th:text="${curatore.nome + ' ' + curatore.cognome}">Nome Curatore</h5>
 							 <a th:href="@{/dettagliCur/{id}(id=${curatore.id})}" class="btn btn-warning">Dettagli</a>
 						</div>
 					</div>

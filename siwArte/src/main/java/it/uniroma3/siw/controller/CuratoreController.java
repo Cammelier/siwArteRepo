@@ -36,12 +36,12 @@ public class CuratoreController {
 
 	    @GetMapping("/curatori")
 	    public String ShowCuratori(Model model) {
-	        model.addAttribute("curatore",curatoreService.findAll());
+	        model.addAttribute("curatori",curatoreService.findAll());
 	        return "curatori";
 	    }
 
 	    
-	    @GetMapping("/dettagliCur/{id}")
+	    @GetMapping("admin/dettagliCur/{id}")
 		public String getCuratore(@PathVariable("id") Long id, Model model) {
 		    Curatore curatore = this.curatoreService.findById(id);
 		    model.addAttribute("curatore", curatore);
@@ -57,8 +57,8 @@ public class CuratoreController {
 				Credenziali credenziali = credenzialiService.getCredenziali(userDetails.getUsername());
 
 				if (credenziali.getRuolo().equals(Credenziali.ADMIN_ROLE)) {
-					model.addAttribute("curatore", curatoreService.findAll());
-					return "admin/managementCuratori.html";
+					model.addAttribute("curatori", curatoreService.findAll());
+					return "admin/managementCuratori";
 				}
 			}
 			return "redirect:/";
@@ -81,7 +81,8 @@ public class CuratoreController {
 		                                   @RequestParam("cognome") String cognome,
 		                                   @RequestParam("codiceFiscale") String codiceFiscale,
 										   @RequestParam("dataNascita") LocalDate dataNascita,
-										   @RequestParam("luogoNascita") String luogoNascita) {
+										   @RequestParam("luogoNascita") String luogoNascita,
+										   @RequestParam("area") String area) {
 		    Curatore existingCuratore = curatoreService.findById(id);
 		    if (existingCuratore != null) {
 		        existingCuratore.setNome(nome);
@@ -89,6 +90,7 @@ public class CuratoreController {
 		        existingCuratore.setCodiceFiscale(codiceFiscale);
 		        existingCuratore.setDataNascita(dataNascita);
 		        existingCuratore.setLuogoNascita(luogoNascita);
+		        existingCuratore.setArea(area);
 		    curatoreService.saveCuratore(existingCuratore);
 		}
 		return "redirect:/admin/managementCuratori";
@@ -106,8 +108,7 @@ public class CuratoreController {
 		                           @RequestParam("dataNascita") LocalDate dataNascita,
 		                           @RequestParam("codiceFiscale") String codiceFiscale,
 		                           @RequestParam("luogoNascita") String luogoNascita,
-		                           @RequestParam("username") String username,
-		                           @RequestParam("password") String password) {
+		                           @RequestParam("area") String area) {
 		    // 1️⃣ Creazione del curatore
 		    Curatore curatore = new Curatore();
 		    curatore.setNome(nome);
@@ -115,6 +116,7 @@ public class CuratoreController {
 		    curatore.setCodiceFiscale(codiceFiscale);
 		    curatore.setLuogoNascita(luogoNascita);
 		    curatore.setDataNascita(dataNascita);
+		    curatore.setArea(area);
 
 		    // 🔹 Salva il curatore PRIMA di assegnargli le credenziali
 		    curatore = curatoreService.saveCuratore(curatore);

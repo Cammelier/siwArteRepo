@@ -188,69 +188,64 @@ public class OperaController {
 		return "redirect:" + referer;
 	}
 	@PostMapping("/editOpera")
-	public String editBici(@RequestParam("id") Long id,
-			@RequestParam("titolo") String titolo,
-			@RequestParam("tecnica") String tecnica,
-			@RequestParam("immagine") MultipartFile immagine,
-			@RequestParam ("annoRealizzazione") int annoRealizzazione,
-			@RequestParam("collocazione") String collocazione,
-			@RequestParam(value = "referer", required = false, defaultValue = "/admin/managementOpere") String referer) {
-		Opera opera = operaService.findById(id);
-		if (opera == null) {
-			return "redirect:/Opere";
-		}
+	public String editOpera(@RequestParam("id") Long id,
+	                        @RequestParam("titolo") String titolo,
+	                        @RequestParam("tecnica") String tecnica,
+	                        @RequestParam("immagine") MultipartFile immagine,
+	                        @RequestParam("annoRealizzazione") int annoRealizzazione,
+	                        @RequestParam("collocazione") String collocazione,
+	                        @RequestParam(value = "referer", required = false, defaultValue = "/admin/managementOpere") String referer) {
 
-		opera.setTitolo(titolo);
-		opera.setAnnoRealizzazione(annoRealizzazione);
-		opera.setCollocazione(collocazione);
-		opera.setTecnica(tecnica);
+	    // 🔎 Controlla se l'opera esiste
+	    Opera opera = operaService.findById(id);
+	    if (opera == null) {
+	        return "redirect:/Opere?error=notfound";
+	    }
 
-		// Gestisci l'immagine
-		if (!immagine.isEmpty()) {
-			// Cancella la vecchia immagine
-			String vecchiaImmagine = opera.getImmagine();
-			if (vecchiaImmagine != null && !vecchiaImmagine.isEmpty()) {
-				File fileVecchiaImmagine = new File("src/main/resources/static/" + vecchiaImmagine);
-				if (fileVecchiaImmagine.exists()) {
-					fileVecchiaImmagine.delete();
-				}
-			}
-			// Salva la nuova immagine nella directory temporanea
-			try {
-				String nuovoNomeImmagine = "uploads/opere/" + immagine.getOriginalFilename();
-				File nuovoFileImmagineTemp = new File(System.getProperty("java.io.tmpdir") + "/" + nuovoNomeImmagine);
+	    // 🖊 Aggiorna i dati dell'opera
+	    opera.setTitolo(titolo);
+	    opera.setAnnoRealizzazione(annoRealizzazione);
+	    opera.setCollocazione(collocazione);
+	    opera.setTecnica(tecnica);
 
-				// Assicurati che la directory esista
-				File directoryTemp = nuovoFileImmagineTemp.getParentFile();
-				if (!directoryTemp.exists()) {
-					directoryTemp.mkdirs();
-				}
+	    // 📸 Gestione dell'immagine
+	    if (!immagine.isEmpty()) {
+	        try {
+	            // Directory esterna per salvare le immagini
+	            String uploadDir = "uploads/opere/";
+	            File uploadPath = new File(uploadDir);
+	            if (!uploadPath.exists()) {
+	                uploadPath.mkdirs(); // Crea la cartella se non esiste
+	            }
 
-				immagine.transferTo(nuovoFileImmagineTemp);
+	            // Cancella la vecchia immagine
+	            if (opera.getImmagine() != null) {
+	                File vecchiaImmagine = new File(uploadDir + opera.getImmagine());
+	                if (vecchiaImmagine.exists()) {
+	                    vecchiaImmagine.delete();
+	                }
+	            }
 
-				// Copia l'immagine nella directory static
-				File nuovoFileImmagine = new File("src/main/resources/static/" + nuovoNomeImmagine);
-				File directory = nuovoFileImmagine.getParentFile();
-				if (!directory.exists()) {
-					directory.mkdirs();
-				}
-				Files.copy(nuovoFileImmagineTemp.toPath(), nuovoFileImmagine.toPath(), StandardCopyOption.REPLACE_EXISTING);
+	            // Salva la nuova immagine
+	            File nuovoFileImmagine = new File(uploadDir + immagine.getOriginalFilename());
+	            immagine.transferTo(nuovoFileImmagine);
 
-				opera.setImmagine(nuovoNomeImmagine);
-			} catch (IOException e) {
-				e.printStackTrace();
-				return "redirect:/opere";
-			}
-		}
+	            // Aggiorna il percorso dell'immagine nell'oggetto Opera
+	            opera.setImmagine("uploads/opere/" + immagine.getOriginalFilename());
 
-		
-		
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	            return "redirect:/opere?error=upload";
+	        }
+	    }
 
-		operaService.saveOpera(opera);
+	    // 💾 Salva l'opera aggiornata
+	    operaService.saveOpera(opera);
 
-		// Reindirizza esclusivamente alla pagina precedente
-		return "redirect:" + referer;
+	    // 🔄 Reindirizza alla pagina precedente
+	    return "redirect:" + referer;
 	}
+
 	
 
 }

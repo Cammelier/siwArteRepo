@@ -21,12 +21,12 @@
             <div class="flip-box">
                 <div class="flip-box-inner">
                     <div class="flip-box-front">
-                        <img th:src="@{'/' + ${curatore.immagine}}" alt="Immagine Curatore" class="img-fluid">
+                        <img th:src="@{ ${curatore.immagine}}" alt="Immagine Curatore" class="img-fluid">
                     </div>
                     <div class="flip-box-back">
                         <div class="card-body">
                             <h5 class="card-title" th:text="${curatore.nome}">Nome</h5>
-                            <a th:href="@{/formNewCuratore(curatoreId=${curatore.id})}" class="btn btn-primary">Aggiungi Curatore</a>
+							<a th:href="@{/dettagliCur(curatoreId=${curatore.id})}" class="btn btn-primary">Dettagli</a>
                             <a th:href="@{/editCuratore(id=${curatore.id})}" class="btn btn-warning">Modifica</a>
                             <a th:href="@{/admin/curatore/delete/{id}(id=${curatore.id})}" class="btn btn-danger">Elimina</a>
                         </div>

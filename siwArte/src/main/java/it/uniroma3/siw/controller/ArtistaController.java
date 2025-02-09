@@ -69,6 +69,7 @@ public class ArtistaController {
 		    model.addAttribute("artista", artista);
 		    return "/editArtista";
 		}
+		
 		@GetMapping(value = "/admin/managementArtisti")
 		public String managementArtisti(Model model) {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -136,7 +137,7 @@ public class ArtistaController {
 		            }
 		        }
 		    }
-		    return "redirect:/admin/managementAristi";
+		    return "redirect:/admin/managementArtisti";
 		}
 		
 		//add artista from admin

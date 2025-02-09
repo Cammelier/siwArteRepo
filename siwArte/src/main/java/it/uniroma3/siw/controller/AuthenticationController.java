@@ -56,7 +56,7 @@ public class AuthenticationController {
                 return "admin/indexAdmin.html";
             }
             if (USER_ROLE.equals(credenziali.getRuolo())) {
-                return "index.html";
+                return "utente/indexUtente.html";
             }
         }
         return "index";
@@ -71,14 +71,14 @@ public class AuthenticationController {
     }
 
     @PostMapping(value = "/register")
-    public String registerCuratore(@RequestParam("nome") String nome,
+    public String registerUtente(@RequestParam("nome") String nome,
                                    @RequestParam("cognome") String cognome,
                                    @RequestParam("dataNascita") String dataNascita,
                                    @RequestParam("username") String username,
                                    @RequestParam("password") String password,
                                    Model model) {
         try {
-            // Creazione del curatore
+            // Creazione dell'utente
             Utente user = new Utente();
             user.setNome(nome);
             user.setCognome(cognome);
@@ -122,7 +122,7 @@ public class AuthenticationController {
                 return "admin/indexAdmin.html";
             }
             if (USER_ROLE.equals(credenziali.getRuolo())) {
-                return "index.html";
+                return "utente/index.html";
             }
         }
         return "index";

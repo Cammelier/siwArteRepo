@@ -16,37 +16,37 @@
     <div th:replace="~{fragments/navbar :: navbar}"></div>
     <div class="boxtitle">
         Modifica Opera
-    </div>
-    <div class="container2 infoBox">
-        <form th:action="@{/editOpera}" th:object="${opera}" method="post" enctype="multipart/form-data" class="form-container">
-            <input type="hidden" th:field="*{id}" />
-            <input type="hidden" name="referer" th:value="${referer}" />
-            <div class="form-group">
-                <label for="nome">Titolo Opera</label>
-                <input type="text" class="form-control" id="titolo" th:field="*{titolo}">
-            </div>
-            <div class="form-group">
-                <label for="immagine">Nuova Opera</label>
-                <input type="file" class="form-control" id="immagine" name="immagine">
-            </div>
-            <div class="form-group">
-                <label for="tecnica">Tecnica</label>
-                <textarea class="form-control" id="tecnica" th:field="*{tecnica}"></textarea>
-            </div>
-			<div class="form-group">
-			     <label for="collocazione">Anno Realizzazione</label>
-			     <input type="date" class="form-control" id="annoRealizzazione" th:value="${annoRealizzazione}" readonly>
-			</div>
-            <div class="form-group">
-                <label for="collocazione">Collocazione</label>
-                <input type="text" class="form-control" id="collocazione" th:value="${collocazione}" readonly>
-            </div>
-			
+		<form th:action="@{/editOpera}" th:object="${opera}" method="post" enctype="multipart/form-data" class="form-container">
+		    <input type="hidden" th:field="*{id}" />
+		    <input type="hidden" name="referer" th:value="${referer}" />
 
+		    <div class="form-group">
+		        <label for="titolo">Titolo Opera</label>
+		        <input type="text" class="form-control" id="titolo" th:field="*{titolo}" required>
+		    </div>
 
-            <button type="submit" class="btn btn-primary">Salva Modifiche</button>
-        </form>
-    </div>
+		    <div class="form-group">
+		        <label for="immagine">Nuova Immagine</label>
+		        <input type="file" class="form-control" id="immagine" name="immagine">
+		    </div>
+
+		    <div class="form-group">
+		        <label for="tecnica">Tecnica</label>
+		        <textarea class="form-control" id="tecnica" th:field="*{tecnica}" required></textarea>
+		    </div>
+
+		    <div class="form-group">
+		        <label for="annoRealizzazione">Anno Realizzazione</label>
+		        <input type="number" class="form-control" id="annoRealizzazione" th:field="*{annoRealizzazione}" name="annoRealizzazione" required>
+		    </div>
+
+		    <div class="form-group">
+		        <label for="collocazione">Collocazione</label>
+		        <input type="text" class="form-control" id="collocazione" th:field="*{collocazione}" name="collocazione" required>
+		    </div>
+
+		    <button type="submit" class="btn btn-primary">Salva Modifiche</button>
+		</form>
     <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

@@ -22,9 +22,23 @@ public class Curatore {
 	    private String codiceFiscale;
 	    private LocalDate dataNascita;
 	    private String luogoNascita;
+	    private String area;
+	    private String immagine;
 	    
 	   
 	    
+		public String getImmagine() {
+			return immagine;
+		}
+		public void setImmagine(String immagine) {
+			this.immagine = immagine;
+		}
+		public String getArea() {
+			return area;
+		}
+		public void setArea(String area) {
+			this.area = area;
+		}
 		public Long getId() {
 			return id;
 		}
