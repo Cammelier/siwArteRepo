@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -41,12 +42,19 @@ public class CuratoreController {
 	    }
 
 	    
-	    @GetMapping("admin/dettagliCur/{id}")
-		public String getCuratore(@PathVariable("id") Long id, Model model) {
-		    Curatore curatore = this.curatoreService.findById(id);
-		    model.addAttribute("curatore", curatore);
-		    return "dettagliCur"; // restituisce il nome della vista Thymeleaf
-		}
+	    @GetMapping("/dettagliCur")
+	    public String getCuratore(@RequestParam("curatoreId") Long id, Model model) {
+	        Curatore curatore = this.curatoreService.findById(id);
+	        if (curatore == null) {
+	            return "errorPage"; // Oppure un redirect a una pagina di errore
+	        }
+	        model.addAttribute("curatore", curatore);
+	        return "dettagliCur";
+	    }
+
+	    
+	   
+
 	    
 	  //managment admin
 		@GetMapping(value = "/admin/managementCuratori")

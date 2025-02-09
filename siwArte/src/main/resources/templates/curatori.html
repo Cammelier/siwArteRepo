@@ -19,7 +19,7 @@
 		Lista Curatori
 	</div>
 	<div class="container2">
-		<div th:each="artista : ${artisti}" class="containerArt">
+		<div th:each="curatore : ${curatori}" class="containerArt">
 			<div class="flip-box">
 				<div class="flip-box-inner">
 					<div class="flip-box-front">
@@ -27,8 +27,11 @@
 					</div>
 					<div class="flip-box-back">
 						<div class="card-body">
-							<h5 class="card-title" th:text="${curatore.nome + ' ' + curatore.cognome}">Nome Curatore</h5>
-							 <a th:href="@{/dettagliCur/{id}(id=${curatore.id})}" class="btn btn-warning">Dettagli</a>
+							<h5 class="card-title" th:text="${curatore.nome}">Nome Curatore</h5>
+							<p class="card-text" th:text="${curatore.cognome}">Cognome Curatore</p>
+							<th:block sec:authorize="hasAnyRole('USER', 'ADMIN')">
+								<a th:href="@{/dettagliCur/{id}(id=${curatore.id})}" class="btn btn-info">Dettagli</a>
+							</th:block>
 						</div>
 					</div>
 				</div>
