@@ -23,9 +23,7 @@ public class Curatore {
 	    private LocalDate dataNascita;
 	    private String luogoNascita;
 	    
-	    @OneToOne(cascade = CascadeType.PERSIST) 
-	    @JoinColumn(name = "credenziali_id", nullable = false)
-	    private Credenziali credenziali;
+	   
 	    
 		public Long getId() {
 			return id;
@@ -63,12 +61,7 @@ public class Curatore {
 		public void setLuogoNascita(String luogoNascita) {
 			this.luogoNascita = luogoNascita;
 		}
-		public Credenziali getCredenziali() {
-			return credenziali;
-		}
-		public void setCredenziali(Credenziali credenziali) {
-			this.credenziali = credenziali;
-		}
+		
 		
 	    
 }

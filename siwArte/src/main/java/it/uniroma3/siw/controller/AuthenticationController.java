@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import it.uniroma3.siw.model.Credenziali;
 import it.uniroma3.siw.model.Curatore;
+import it.uniroma3.siw.model.Utente;
 import it.uniroma3.siw.service.CredenzialiService;
 import it.uniroma3.siw.service.CuratoreService;
+import it.uniroma3.siw.service.UtenteService;
 
 @Controller
 public class AuthenticationController {
@@ -27,13 +29,13 @@ public class AuthenticationController {
     private CredenzialiService credenzialiService;
 
     @Autowired
-    private CuratoreService curatoreService;
+    private UtenteService utenteService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     private static final String ADMIN_ROLE = "ADMIN";
-    private static final String CURATORE_ROLE = "CURATORE";
+    private static final String USER_ROLE = "USER";
 
     // Login
     @GetMapping(value = "/login")
@@ -53,17 +55,17 @@ public class AuthenticationController {
             if (ADMIN_ROLE.equals(credenziali.getRuolo())) {
                 return "admin/indexAdmin.html";
             }
-            if (CURATORE_ROLE.equals(credenziali.getRuolo())) {
+            if (USER_ROLE.equals(credenziali.getRuolo())) {
                 return "index.html";
             }
         }
         return "index";
     }
 
-    // Registrazione Curatore
+    // Registrazione Utente
     @GetMapping(value = "/register")
     public String showRegisterForm(Model model) {
-        model.addAttribute("curatore", new Curatore());
+        model.addAttribute("user", new Utente());
         model.addAttribute("credenziali", new Credenziali());
         return "register";
     }
@@ -72,32 +74,32 @@ public class AuthenticationController {
     public String registerCuratore(@RequestParam("nome") String nome,
                                    @RequestParam("cognome") String cognome,
                                    @RequestParam("dataNascita") String dataNascita,
-                                   @RequestParam("luogoNascita") String luogoNascita,
                                    @RequestParam("username") String username,
                                    @RequestParam("password") String password,
                                    Model model) {
         try {
             // Creazione del curatore
-            Curatore curatore = new Curatore();
-            curatore.setNome(nome);
-            curatore.setCognome(cognome);
-            curatore.setDataNascita(LocalDate.parse(dataNascita));
-            curatore.setLuogoNascita(luogoNascita);
+            Utente user = new Utente();
+            user.setNome(nome);
+            user.setCognome(cognome);
+            user.setDataNascita(LocalDate.parse(dataNascita));
+           
 
             // Creazione delle credenziali
             Credenziali credenziali = new Credenziali();
             credenziali.setUsername(username);
             credenziali.setPassword(passwordEncoder.encode(password));
-            credenziali.setRuolo(CURATORE_ROLE);
-            credenziali.setCuratore(curatore);
+            credenziali.setRuolo(USER_ROLE);
+            credenziali.setUtente(user);
 
-            curatore.setCredenziali(credenziali);
+            user.setCredenziali(credenziali);
 
-            // Salvataggio
-            curatoreService.saveCuratore(curatore);
+            
+			// Salvataggio
+            utenteService.saveUtente(user);
             credenzialiService.save(credenziali);
 
-            model.addAttribute("curatore", curatore);
+            model.addAttribute("user", user);
             return "login";
         } catch (Exception e) {
             e.printStackTrace();
@@ -119,7 +121,7 @@ public class AuthenticationController {
             if (ADMIN_ROLE.equals(credenziali.getRuolo())) {
                 return "admin/indexAdmin.html";
             }
-            if (CURATORE_ROLE.equals(credenziali.getRuolo())) {
+            if (USER_ROLE.equals(credenziali.getRuolo())) {
                 return "index.html";
             }
         }

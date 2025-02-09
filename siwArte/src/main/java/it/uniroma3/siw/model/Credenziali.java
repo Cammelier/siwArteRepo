@@ -6,6 +6,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -13,7 +14,7 @@ public class Credenziali {
 
 	
 	public static final String ADMIN_ROLE = "ADMIN";
-	public static final String CURATORE_ROLE = "CURATORE";
+	public static final String USER_ROLE = "USER";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,7 +25,8 @@ public class Credenziali {
 	
 	
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private Curatore curatore;
+	@JoinColumn(name="user_id", nullable=false)
+	private Utente user;
 
 	public Long getId() {
 		return id;
@@ -58,12 +60,12 @@ public class Credenziali {
 		this.ruolo = ruolo;
 	}
 
-	public Curatore getCuratore() {
-		return curatore;
+	public Utente getUtente() {
+		return user;
 	}
 
-	public void setCuratore(Curatore curatore) {
-		this.curatore = curatore;
+	public void setUtente(Utente user) {
+		this.user = user;
 	}
 
 

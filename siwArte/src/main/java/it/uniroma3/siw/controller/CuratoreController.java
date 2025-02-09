@@ -30,11 +30,8 @@ public class CuratoreController {
 	 
 	 @Autowired
 	 	private CuratoreService curatoreService;
-	 @Autowired
-		private CredenzialiService credenzialiService;
-
-	@Autowired
-		private PasswordEncoder passwordEncoder;
+	@Autowired 
+	private CredenzialiService credenzialiService;
 
 
 	    @GetMapping("/curatori")
@@ -122,18 +119,7 @@ public class CuratoreController {
 		    // 🔹 Salva il curatore PRIMA di assegnargli le credenziali
 		    curatore = curatoreService.saveCuratore(curatore);
 
-		    // 2️⃣ Creazione delle credenziali
-		    Credenziali credenziali = new Credenziali();
-		    credenziali.setUsername(username);
-		    credenziali.setPassword(passwordEncoder.encode(password));
-		    credenziali.setRuolo(Credenziali.CURATORE_ROLE);
-
-		    // 🔹 Ora assegna il curatore alle credenziali (per evitare problemi di transitorietà)
-		    credenziali.setCuratore(curatore);
-		    curatore.setCredenziali(credenziali);
-
-		    // 🔹 Salva le credenziali DOPO aver salvato il curatore
-		    credenzialiService.save(credenziali);
+		  
 
 		    return "redirect:/admin/managementCuratori";
 		}
@@ -143,20 +129,8 @@ public class CuratoreController {
 		@GetMapping("/admin/curatore/delete/{id}")
 		public String deleteCuratore(@PathVariable("id") Long id) {
 		    Curatore curatore = curatoreService.findById(id);
-		    if (curatore != null) {
-		    	Credenziali credenziali = curatore.getCredenziali();
-		    	if(credenziali != null) {
-		    		curatore.setCredenziali(null);
-		    		curatoreService.saveCuratore(curatore);
-		    		
-		    		credenziali.setCuratore(null);
-		    		credenzialiService.save(credenziali);
-		    		
-		    		credenzialiService.delete(credenziali);
-		    	}
 		        // Elimina il curatore
 		        curatoreService.deleteCuratore(curatore);
-		    }
 		    return "redirect:/admin/managementCuratori"; // Reindirizza alla lista dei negozi
 		}
 
