@@ -101,7 +101,7 @@ body {
 	text-align: center;
 	font-size: 16px;
 	border-radius: 10px;
-	background-color: mediumspringgreen;
+	background-color: #927659;
 	color: white;
 	border: none;
 	cursor: pointer;
@@ -122,7 +122,7 @@ body {
 .navbarprinc {
 	background-color: rgb(52, 58, 64, 0.6);
 	/* Dark background color */
-	border-bottom: 3px solid mediumspringgreen;
+	border-bottom: 3px solid #927659;
 	/* Bottom border with accent color */
 	width: 100%;
 	top: 0;
@@ -147,12 +147,12 @@ body {
 }
 
 .navbar-nav .nav-link:hover {
-	color: mediumspringgreen;
+	color: #927659;
 	/* Accent color on hover */
 }
 
 .navbar-toggler {
-	border-color: mediumspringgreen;
+	border-color: #927659;
 	/* Toggler button border color */
 }
 
@@ -303,8 +303,8 @@ body {
     font-size: 26px; /* Leggermente più grande */
     font-weight: bold;
     font-family: 'Roboto', sans-serif; /* Font per il titolo */
-    color: mediumspringgreen; /* Colore del testo più vivace */
-    border: 2px solid mediumspringgreen; /* Bordo dello stesso colore del testo */
+    color: #927659; /* Colore del testo più vivace */
+    border: 2px solid #927659; /* Bordo dello stesso colore del testo */
     position: relative; /* Fissa la posizione */
     z-index: 10;
 }
@@ -399,7 +399,7 @@ body {
 }
 
 .negozio-title {
-	color: mediumspringgreen;
+	color: #927659;
 	font-family: 'Roboto', sans-serif;
 }
 
