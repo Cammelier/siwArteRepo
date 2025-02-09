@@ -40,11 +40,6 @@ public class CredenzialiService {
         credenzialiRepository.delete(credenziali);
     }
 
-	/*	@Transactional
-	public Credenziali saveCredenziali(Credenziali credentials) {
-		// Non sovrascrivere il ruolo qui
-		credentials.setPassword(this.passwordEncoder.encode(credentials.getPassword()));
-		return this.credentialsRepository.save(credentials);
-	}*/
+
 
 }

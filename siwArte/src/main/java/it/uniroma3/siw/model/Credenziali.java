@@ -25,8 +25,8 @@ public class Credenziali {
 	
 	
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name="user_id", nullable=false)
-	private Utente user;
+	@JoinColumn(name="utente_id", nullable=false)
+	private Utente utente;
 
 	public Long getId() {
 		return id;
@@ -61,11 +61,11 @@ public class Credenziali {
 	}
 
 	public Utente getUtente() {
-		return user;
+		return utente;
 	}
 
 	public void setUtente(Utente user) {
-		this.user = user;
+		this.utente = user;
 	}
 
 

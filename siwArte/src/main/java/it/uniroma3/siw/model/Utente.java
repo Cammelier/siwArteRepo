@@ -19,7 +19,7 @@ public class Utente {
 	    private String email;
 	    private LocalDate dataNascita;
 
-	    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	    @OneToOne(mappedBy = "utente", cascade = CascadeType.ALL)
 	    private Credenziali credenziali;
 
 	    // Getters e Setters

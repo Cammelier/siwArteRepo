@@ -27,29 +27,34 @@ public class UtenteService {
 	    public Utente saveUtente(Utente user) {
 	        return userRepository.save(user);
 	    }
+	    
 	    @Transactional
 	    public Utente createUser(String nome, String cognome, String email, String username, String password) {
-	        // Creazione dell'utente
+	        // 1️⃣ Crea l'utente
 	        Utente user = new Utente();
 	        user.setNome(nome);
 	        user.setCognome(cognome);
 	        user.setEmail(email);
 
-	        // Salvataggio dell'utente nel database
+	        // 🔹 Salva l'utente prima di creare le credenziali
 	        user = userRepository.save(user);
 
-	        // Creazione delle credenziali
+	        // 2️⃣ Crea le credenziali
 	        Credenziali credenziali = new Credenziali();
 	        credenziali.setUsername(username);
-	        credenziali.setPassword(passwordEncoder.encode(password)); // Password criptata
+	        credenziali.setPassword(passwordEncoder.encode(password)); // Crittografa password
 	        credenziali.setRuolo(Credenziali.USER_ROLE);
 	        credenziali.setUtente(user);
 
-	        // Salvataggio delle credenziali
+	        // 3️⃣ Collega credenziali all'utente
+	        user.setCredenziali(credenziali);
+
+	        // 4️⃣ Salva le credenziali
 	        credenzialiRepository.save(credenziali);
 
 	        return user;
 	    }
+
 	}
 
 
