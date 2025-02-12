@@ -43,7 +43,5 @@ public class CuratoreService {
         curatoreRepository.deleteById(id);
     }
     
-    public long getNumeroCuratori() {
-    	return curatoreRepository.count();
-    }
+ 
 }

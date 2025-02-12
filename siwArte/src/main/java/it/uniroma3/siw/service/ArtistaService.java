@@ -47,7 +47,5 @@ public class ArtistaService {
     	 artistaRepository.delete(artista);
     }
     
-    public long getNumeroArtisti() {
-    	return artistaRepository.count();
-    }
+   
 }

@@ -7,7 +7,4 @@ import org.springframework.stereotype.Repository;
 import it.uniroma3.siw.model.Curatore;
 @Repository
 public interface CuratoreRepository extends CrudRepository <Curatore,Long> {
-
-	@Query ("Select COUNT(c) FROM Curatore c")
-			long contaCuratori();
 }

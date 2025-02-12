@@ -8,6 +8,5 @@ import it.uniroma3.siw.model.Artista;
 @Repository
 public interface ArtistaRepository extends CrudRepository< Artista, Long> {
 
-	@Query("SELECT COUNT(a) FROM Artista a")
-		long contaArtisti();
+	
 }
