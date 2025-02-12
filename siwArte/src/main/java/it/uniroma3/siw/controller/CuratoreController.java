@@ -38,7 +38,6 @@ public class CuratoreController {
 	    @GetMapping("/curatori")
 	    public String ShowCuratori(Model model) {
 	        model.addAttribute("curatori", curatoreService.findAll());
-	        model.addAttribute("numeroCuratori", curatoreService.getNumeroCuratori());
 	        return "curatori";
 	    }
 

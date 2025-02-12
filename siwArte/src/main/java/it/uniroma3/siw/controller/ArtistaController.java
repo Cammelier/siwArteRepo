@@ -47,6 +47,7 @@ public class ArtistaController {
 		@GetMapping("/artisti")
 		public String showArtisti(Model model) {
 			model.addAttribute("artisti", artistaService.findAll());
+			model.addAttribute("numeroArtisti",artistaService.getNumeroArtisti());
 			return "artisti"; //restituisce il nome della vista
 		}
 		

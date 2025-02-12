@@ -16,7 +16,7 @@
 	<!-- Include la navbar -->
 	<div th:replace="~{fragments/navbar :: navbar}"></div>
 	<div class="boxtitle">
-		Lista Artisti
+		Lista Artisti (<span th:text="${numeroArtisti}">0</span>)
 	</div>
 	<div class="container2">
 		<div th:each="artista : ${artisti}" class="containerArt">
