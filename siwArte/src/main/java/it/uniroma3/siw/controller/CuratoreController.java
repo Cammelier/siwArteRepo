@@ -37,17 +37,15 @@ public class CuratoreController {
 
 	    @GetMapping("/curatori")
 	    public String ShowCuratori(Model model) {
-	        model.addAttribute("curatori",curatoreService.findAll());
+	        model.addAttribute("curatori", curatoreService.findAll());
+	        model.addAttribute("numeroCuratori", curatoreService.getNumeroCuratori());
 	        return "curatori";
 	    }
 
 	    
-	    @GetMapping("/dettagliCur")
-	    public String getCuratore(@RequestParam("curatoreId") Long id, Model model) {
+	    @GetMapping("/dettagliCur/{id}")
+	    public String getCuratore(@PathVariable("id") Long id, Model model) {
 	        Curatore curatore = this.curatoreService.findById(id);
-	        if (curatore == null) {
-	            return "errorPage"; // Oppure un redirect a una pagina di errore
-	        }
 	        model.addAttribute("curatore", curatore);
 	        return "dettagliCur";
 	    }

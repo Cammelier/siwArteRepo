@@ -21,7 +21,7 @@
     </div>
     <div class="container2 d-flex align-items-center mb-2">
 		<div class="boxfotodet mr-4">
-					<img th:src="@{'/' + ${artista.immagine}}" alt="Immagine Artista" class="img-fluid">
+					<img th:src="@{ ${artista.immagine}}" alt="Immagine Artista" class="img-fluid">
 		        </div>
         <div>
             <h3 class="card-title" th:text="${artista.nome + ' ' + artista.cognome}" style="color: black; font-family: 'Roboto', sans-serif;">Nome e cognome  Artista</h3>
@@ -36,7 +36,7 @@
     </div>
     <div class="container2">
         <div th:if="${#lists.isEmpty(artista.opere)}" class="text-center mt-2">
-            <p style="color: #ffffff;">Non sono presenti opere per questo artista</p>
+            <p style="color: black;">Non sono presenti opere per questo artista</p>
             <i class="fas fa-frown" style="color: #927659; font-size: 2em;"></i>
         </div>
         <div th:unless="${#lists.isEmpty(artista.opere)}" class="dettagliScorrimento">

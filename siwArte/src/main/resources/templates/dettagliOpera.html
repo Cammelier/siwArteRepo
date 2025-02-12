@@ -24,16 +24,16 @@
             <img th:src="@{'/' + ${opera.immagine}}" alt="Immagine Opera" class="img-fluid">
         </div>
         <div class="d-flex flex-column">
-            <h3 class="card-title" th:text="${opera.titolo}" style="color: mediumspringgreen; font-family: 'Roboto', sans-serif;">Titolo Opera</h3>
-            <p class="card-text" style="color: #ffffff;"><strong>Tecnica: </strong><span th:text="${opera.tecnica}"> Tecnica dell'opera</span></p>
-			<p class="card-text" style="color: #ffffff;"><strong>Anno Realizzazione: </strong><span th:text="${opera.annoRealizzazione}"> Anno Realizzazione</span></p>
-            <p class="card-text" style="color: #ffffff;"><strong>Artista: </strong><a th:href="@{/dettagliArt/{id}(id=${opera.artista.id})}" th:text="${opera.artista.nome}" style="color: mediumspringgreen;">Nome Negozio</a></p>
+            <h3 class="card-title" th:text="${opera.titolo}" style="color: black; font-family: 'Roboto', sans-serif;">Titolo Opera</h3>
+            <p class="card-text" style="color: black;"><strong>Tecnica: </strong><span th:text="${opera.tecnica}"> Tecnica dell'opera</span></p>
+			<p class="card-text" style="color: black;"><strong>Anno Realizzazione: </strong><span th:text="${opera.annoRealizzazione}"> Anno Realizzazione</span></p>
+            <p class="card-text" style="color: black;"><strong>Artista: </strong><a th:href="@{/dettagliArt/{id}(id=${opera.artista.id})}" th:text="${opera.artista.nome + ' ' + opera.artista.cognome}" style="color: black;">Nome e cognome Artista</a></p>
         </div>
         </div>
     </div>
 
     <div class="boxtitle mt-0 text-center">
-        Le altre opere di <span th:text="${opera.artista.nome}">Nome Artista</span>
+        Le altre opere di <span th:text="${opera.artista.nome + ' ' + opera.artista.cognome}">Nome e cognome  Artista</span>
     </div>
     <div class="container2">
         <div th:unless="${#lists.isEmpty(opera.artista.opere)}" class="dettagliScorrimento">
@@ -55,7 +55,7 @@
         </div>
         <div th:if="${#lists.isEmpty(opera.artista.opere) || opera.artista.opere.size() == 1}" class="text-center mt-2">
             <p style="color: #ffffff;">Non ci sono altre opere per questo artista</p>
-            <i class="fas fa-frown" style="color: mediumspringgreen; font-size: 2em;"></i>
+            <i class="fas fa-frown" style="color: black; font-size: 2em;"></i>
         </div>
     </div>
 

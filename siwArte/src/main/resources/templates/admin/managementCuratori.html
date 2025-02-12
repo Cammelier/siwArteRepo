@@ -25,8 +25,7 @@
                     </div>
                     <div class="flip-box-back">
                         <div class="card-body">
-                            <h5 class="card-title" th:text="${curatore.nome}">Nome</h5>
-							<a th:href="@{/dettagliCur(curatoreId=${curatore.id})}" class="btn btn-primary">Dettagli</a>
+                            <h5 class="card-title" th:text="${curatore.nome + ' ' + curatore.cognome}">Nome e cognome</h5>
                             <a th:href="@{/editCuratore(id=${curatore.id})}" class="btn btn-warning">Modifica</a>
                             <a th:href="@{/admin/curatore/delete/{id}(id=${curatore.id})}" class="btn btn-danger">Elimina</a>
                         </div>

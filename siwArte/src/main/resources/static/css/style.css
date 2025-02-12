@@ -409,9 +409,9 @@ body {
 
 /*///////////////////////////////*/
 .boxfotodet {
-	width: 200px;
-	height: 200px;
-	overflow: hidden;
+	width: 250px;
+	height: 250px;
+	object-fit: contain;
 	border-radius: 50%;
 }
 /*******************************************/
